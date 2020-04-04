@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="14dp">
+
+    <at.grabner.circleprogress.CircleProgressView
+        android:id="@+id/progress"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="10dp"
+        app:cpv_autoTextSize="true"
+        app:cpv_barColor="@color/light_blue_800"
+        app:cpv_blockCount="40"
+        app:cpv_blockScale="0.7"
+        app:cpv_innerContourSize="0dp"
+        app:cpv_outerContourSize="0dp"
+        app:cpv_rimColor="@color/grey_300"
+        app:cpv_showUnit="true"
+        app:cpv_textMode="Percent"
+        app:cpv_unit="%" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@id/progress"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:maxLines="2"
+            android:text="@string/text_item_label"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/created"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/text_item_created" />
+    </LinearLayout>
+
+</RelativeLayout>

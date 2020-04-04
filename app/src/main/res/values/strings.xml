@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Maya A Home</string>
+    <string name="text_item_label">Item Label</string>
+    <string name="text_item_created">12/12/2020</string>
+    <string name="title_about">About</string>
+    <string name="title_qr_code">QR Code</string>
+    <string name="text_signin">sign in</string>
+    <string name="text_signup">sign up</string>
+    <string name="text_create_account">create account now</string>
+    <string name="app_punchline">Make us your partner</string>
+    <string name="text_logout">Logout</string>
+</resources>

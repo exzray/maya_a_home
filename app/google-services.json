@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "239397622010",
+    "firebase_url": "https://renovation-v2.firebaseio.com",
+    "project_id": "renovation-v2",
+    "storage_bucket": "renovation-v2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239397622010:android:47d56db2a4b3a66b7b7943",
+        "android_client_info": {
+          "package_name": "com.afiq.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239397622010-poneou5oaivskl8p65mj0frv642omr61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCbYvfjPxyceK8AGi2vgnAKQRL15DTheI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239397622010-poneou5oaivskl8p65mj0frv642omr61.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
