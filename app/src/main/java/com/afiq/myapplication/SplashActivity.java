@@ -17,7 +17,7 @@ import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProfileViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static com.afiq.myapplication.utilities.Interaction.EXTRA_BOOLEAN_PROJECT_EXIST;
+import static com.afiq.myapplication.utilities.Interaction.EXTRA_BOOLEAN_PROFILE_EXIST;
 
 public class SplashActivity extends AppCompatActivity implements Observer<ProfileModel> {
 
@@ -52,7 +52,7 @@ public class SplashActivity extends AppCompatActivity implements Observer<Profil
         dialog.dismiss();
 
         Intent profileIntent = new Intent(this, ProfileActivity.class);
-        profileIntent.putExtra(EXTRA_BOOLEAN_PROJECT_EXIST, (data != null));
+        profileIntent.putExtra(EXTRA_BOOLEAN_PROFILE_EXIST, (data != null));
 
         if (data == null) Interaction.nextEnd(this, profileIntent);
         else userPrivillege(data);

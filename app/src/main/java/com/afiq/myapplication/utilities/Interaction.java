@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Interaction {
 
     public static final String EXTRA_STRING_PROJECT_UID = "projectUID";
-    public static final String EXTRA_BOOLEAN_PROJECT_EXIST = "projectExist";
+    public static final String EXTRA_BOOLEAN_PROFILE_EXIST = "profileExist";
 
 
     public static void nextEnd(AppCompatActivity activity, Intent intent) {

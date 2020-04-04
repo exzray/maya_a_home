@@ -11,7 +11,7 @@ public class ProfileModel {
 
     private String name = "";
     private String email = "";
-    private String mobile = "";
+    private String contact = "";
     private String address = "";
 
     private Boolean isStaff = false;
@@ -49,12 +49,12 @@ public class ProfileModel {
         this.email = email;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getContact() {
+        return contact;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String getAddress() {

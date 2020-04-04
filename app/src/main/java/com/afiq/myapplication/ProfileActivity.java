@@ -1,30 +1,124 @@
 package com.afiq.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.afiq.myapplication.databinding.ActivityProfileBinding;
+import com.afiq.myapplication.models.ProfileModel;
+import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
+import com.afiq.myapplication.utilities.MyDialog;
+import com.afiq.myapplication.viewmodels.ProfileViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.SetOptions;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements Observer<ProfileModel>, OnCompleteListener<Void> {
 
-    private boolean project_exist;
+
+    private String _name = "";
+    private String _contact = "";
+    private String _address = "";
+    private String _error = "";
+
+    private Boolean _profile_exist;
+
+    private ActivityProfileBinding binding;
+
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        project_exist = getIntent().getBooleanExtra(Interaction.EXTRA_BOOLEAN_PROJECT_EXIST, true);
+        _profile_exist = getIntent().getBooleanExtra(Interaction.EXTRA_BOOLEAN_PROFILE_EXIST, true);
 
         setupActionBar();
+        setupProfileListener();
+        Toast.makeText(this, auth.getUid(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onChanged(ProfileModel data) {
+        Intent intent = new Intent(this, MainActivity.class);
+
+        if (data != null && !_profile_exist) Interaction.nextEnd(this, intent);
+    }
+
+    @Override
+    public void onComplete(@NonNull Task<Void> task) {
+        if (task.isSuccessful()) Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+        else {
+            assert task.getException() != null;
+            Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onClickUpdate(View view) {
+        collectUpdateInfo();
     }
 
     private void setupActionBar() {
         setTitle("Update Profile");
 
-        if (!project_exist && getSupportActionBar() != null)
+        if (!_profile_exist && getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    private void setupProfileListener() {
+        ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        profileViewModel.getData(FirebaseHelper.getUserProfile()).observe(this, this);
+    }
+
+    private void collectUpdateInfo() {
+        _error = "";
+
+        _name = ((EditText) binding.name).getText().toString();
+        _contact = ((EditText) binding.contact).getText().toString();
+        _address = ((EditText) binding.address).getText().toString();
+
+        validateUpdateInfo();
+    }
+
+    private void validateUpdateInfo() {
+        if (_name.isEmpty() || _contact.isEmpty() || _address.isEmpty())
+            _error += "All field must be fill.\n";
+
+        if (!_error.isEmpty()) {
+            MyDialog.showDialog(this, _error);
+            return;
+        }
+
+        updateProfile();
+    }
+
+    private void updateProfile() {
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user == null) return;
+
+        ProfileModel data = new ProfileModel();
+        data.setEmail(user.getEmail());
+        data.setName(_name);
+        data.setContact(_contact);
+        data.setAddress(_address);
+
+        FirebaseHelper
+                .getUserProfile()
+                .set(data, SetOptions.merge())
+                .addOnCompleteListener(this);
     }
 }

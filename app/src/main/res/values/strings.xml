@@ -9,4 +9,5 @@
     <string name="text_create_account">create account now</string>
     <string name="app_punchline">Make us your partner</string>
     <string name="text_logout">Logout</string>
+    <string name="text_update_profile">update profile</string>
 </resources>
