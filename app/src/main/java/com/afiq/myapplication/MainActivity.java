@@ -19,7 +19,6 @@ import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements ProjectAdapter.ProjectActionItem, FirebaseAuth.AuthStateListener {
 
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
     private ProjectAdapter projectAdapter;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +87,9 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
     }
 
     private void updateUI(FirebaseUser user) {
-        if (user == null) Interaction.nextEnd(this, SplashActivity.class);
+        Intent intent = new Intent(this, SplashActivity.class);
+
+        if (user == null) Interaction.nextEnd(this, intent);
     }
 
     private void setupRecycler() {

@@ -1,21 +1,33 @@
 package com.afiq.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.afiq.myapplication.databinding.ActivitySplashBinding;
+import com.afiq.myapplication.models.ProfileModel;
+import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
+import com.afiq.myapplication.viewmodels.ProfileViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SplashActivity extends AppCompatActivity {
+import static com.afiq.myapplication.utilities.Interaction.EXTRA_BOOLEAN_PROJECT_EXIST;
+
+public class SplashActivity extends AppCompatActivity implements Observer<ProfileModel> {
 
     private ActivitySplashBinding binding;
+    private ProfileViewModel profileViewModel;
+
+    private ProgressDialog dialog;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +37,25 @@ public class SplashActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
-        animate();
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        animate();
         checkUser();
+    }
+
+    @Override
+    public void onChanged(ProfileModel data) {
+        dialog.dismiss();
+
+        Intent profileIntent = new Intent(this, ProfileActivity.class);
+        profileIntent.putExtra(EXTRA_BOOLEAN_PROJECT_EXIST, (data != null));
+
+        if (data == null) Interaction.nextEnd(this, profileIntent);
+        else userPrivillege(data);
     }
 
     public void onClickSignIn(View view) {
@@ -51,6 +73,21 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkUser() {
-        if (auth.getCurrentUser() != null) Interaction.nextEnd(this, MainActivity.class);
+        if (auth.getCurrentUser() != null) {
+            dialog = new ProgressDialog(this);
+            dialog.setMessage("Checking the profile...");
+            dialog.setCancelable(false);
+            dialog.show();
+
+            profileViewModel.getData(FirebaseHelper.getUserProfile()).observe(this, this);
+        } else animate();
+    }
+
+    private void userPrivillege(ProfileModel data) {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        Intent mainAdminIntent = new Intent(this, MainAdminActivity.class);
+
+        if (data.getStaff()) Interaction.nextEnd(this, mainAdminIntent);
+        else Interaction.nextEnd(this, mainIntent);
     }
 }

@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Interaction {
 
     public static final String EXTRA_STRING_PROJECT_UID = "projectUID";
+    public static final String EXTRA_BOOLEAN_PROJECT_EXIST = "projectExist";
 
 
-    public static void nextEnd(AppCompatActivity activity, Class<?> blueprint) {
-        Intent intent = new Intent(activity, blueprint);
+    public static void nextEnd(AppCompatActivity activity, Intent intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         activity.startActivity(intent);
