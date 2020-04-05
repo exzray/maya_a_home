@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.adapters.ProjectAdapter;
@@ -18,13 +20,16 @@ import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
-import com.google.firebase.auth.FirebaseAuth;
+import com.afiq.myapplication.viewmodels.ProjectViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements ProjectAdapter.ProjectActionItem, FirebaseAuth.AuthStateListener {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements Observer<List<ProjectModel>> {
 
     private ActivityMainBinding binding;
 
+    private ProjectViewModel projectViewModel;
     private ProjectAdapter projectAdapter;
 
 
@@ -34,17 +39,22 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        projectAdapter = new ProjectAdapter(this, this);
-
-        FirebaseHelper.getAuth().addAuthStateListener(this);
+        projectAdapter = new ProjectAdapter(this::onClickProject);
+        projectViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
         setupRecycler();
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        projectViewModel.getUserProjects().observe(this, this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        FirebaseHelper.getAuth().removeAuthStateListener(this);
+        projectViewModel.getUserProjects().removeObserver(this);
     }
 
     @Override
@@ -75,12 +85,11 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
     }
 
     @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        updateUI(firebaseAuth.getCurrentUser());
+    public void onChanged(List<ProjectModel> list) {
+        projectAdapter.update(list);
     }
 
-    @Override
-    public void onClick(ProjectModel data) {
+    private void onClickProject(ProjectModel data) {
         Intent intent = new Intent(this, ProjectActivity.class);
         intent.putExtra(Interaction.EXTRA_STRING_PROJECT_UID, data.getSnapshot().getId());
 
@@ -118,5 +127,6 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
 
     private void actionLogout() {
         FirebaseHelper.getAuth().signOut();
+        updateUI(FirebaseHelper.getAuth().getCurrentUser());
     }
 }

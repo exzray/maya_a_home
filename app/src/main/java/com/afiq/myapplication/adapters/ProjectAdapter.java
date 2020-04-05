@@ -5,31 +5,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.afiq.myapplication.MainActivity;
 import com.afiq.myapplication.databinding.ItemProjectBinding;
 import com.afiq.myapplication.models.ProjectModel;
-import com.afiq.myapplication.utilities.FirebaseHelper;
-import com.afiq.myapplication.viewmodels.ProjectViewModel;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> implements Observer<List<ProjectModel>> {
+public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
 
     private final List<ProjectModel> list = new ArrayList<>();
     private final ProjectActionItem actionItem;
 
-    public ProjectAdapter(ProjectActionItem actionItem, MainActivity activity) {
+    public ProjectAdapter(ProjectActionItem actionItem) {
         this.actionItem = actionItem;
-
-        ProjectViewModel viewModel = new ViewModelProvider(activity).get(ProjectViewModel.class);
-        viewModel.getProjects(FirebaseHelper.getUserProjectsQuery()).observe(activity, this);
     }
 
     @NonNull
@@ -48,10 +40,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> impl
         return list.size();
     }
 
-    @Override
-    public void onChanged(List<ProjectModel> payments) {
+    public void update(List<ProjectModel> updates) {
         list.clear();
-        list.addAll(payments);
+        list.addAll(updates);
         notifyDataSetChanged();
     }
 
