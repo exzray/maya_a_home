@@ -36,6 +36,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // androidx library
+    implementation "androidx.cardview:cardview:1.0.0"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -52,6 +53,7 @@ dependencies {
     implementation 'com.karumi:dexter:6.0.2'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.emredavarci:CircleProgressBar:1.0.8'
+    implementation 'com.github.vipulasri:timelineview:1.1.4'
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
