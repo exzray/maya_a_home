@@ -10,4 +10,5 @@
     <string name="app_punchline">Make us your partner</string>
     <string name="text_logout">Logout</string>
     <string name="text_update_profile">update profile</string>
+    <string name="text_profile">Profile</string>
 </resources>

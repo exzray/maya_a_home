@@ -15,6 +15,7 @@ import com.afiq.myapplication.adapters.ProjectAdapter;
 import com.afiq.myapplication.databinding.ActivityMainBinding;
 import com.afiq.myapplication.databinding.DialogQrCodeBinding;
 import com.afiq.myapplication.models.ProjectModel;
+import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
 
     private ProjectAdapter projectAdapter;
 
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
 
         projectAdapter = new ProjectAdapter(this, this);
 
-        auth.addAuthStateListener(this);
+        FirebaseHelper.getAuth().addAuthStateListener(this);
 
         setupRecycler();
     }
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        auth.removeAuthStateListener(this);
+        FirebaseHelper.getAuth().removeAuthStateListener(this);
     }
 
     @Override
@@ -60,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
             case R.id.action_code:
                 actionCode();
                 break;
+            case R.id.action_profile:
+                actionProfile();
+                break;
             case R.id.action_logout:
                 actionLogout();
                 break;
@@ -69,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
             default:
                 break;
         }
-
         return false;
     }
 
@@ -98,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
     }
 
     private void actionCode() {
-        FirebaseUser user = auth.getCurrentUser();
-        assert user != null;
+        FirebaseUser user = FirebaseHelper.getUser();
 
         DialogQrCodeBinding binding = DialogQrCodeBinding.inflate(getLayoutInflater());
 
@@ -111,7 +111,12 @@ public class MainActivity extends AppCompatActivity implements ProjectAdapter.Pr
         builder.create().show();
     }
 
+    private void actionProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
     private void actionLogout() {
-        auth.signOut();
+        FirebaseHelper.getAuth().signOut();
     }
 }

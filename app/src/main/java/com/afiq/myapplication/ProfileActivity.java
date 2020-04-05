@@ -19,12 +19,11 @@ import com.afiq.myapplication.utilities.MyDialog;
 import com.afiq.myapplication.viewmodels.ProfileViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.SetOptions;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 public class ProfileActivity extends AppCompatActivity implements Observer<ProfileModel>, OnCompleteListener<Void> {
-
 
     private String _name = "";
     private String _contact = "";
@@ -33,9 +32,10 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
 
     private Boolean _profile_exist;
 
-    private ActivityProfileBinding binding;
+    private ProfileViewModel profileViewModel;
 
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private ActivityProfileBinding binding;
+    private CatLoadingView dialog;
 
 
     @Override
@@ -45,17 +45,34 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
         setContentView(binding.getRoot());
 
         _profile_exist = getIntent().getBooleanExtra(Interaction.EXTRA_BOOLEAN_PROFILE_EXIST, true);
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         setupActionBar();
-        setupProfileListener();
-        Toast.makeText(this, auth.getUid(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        profileViewModel.getData().observe(this, this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        profileViewModel.getData().removeObserver(this);
     }
 
     @Override
     public void onChanged(ProfileModel data) {
         Intent intent = new Intent(this, MainActivity.class);
 
-        if (data != null && !_profile_exist) Interaction.nextEnd(this, intent);
+        if (data != null) {
+            binding.name.setText(data.getName());
+            binding.contact.setText(data.getContact());
+            binding.address.setText(data.getAddress());
+
+            if (!_profile_exist) Interaction.nextEnd(this, intent);
+        }
     }
 
     @Override
@@ -65,6 +82,8 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
             assert task.getException() != null;
             Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+        dialog.dismiss();
     }
 
     public void onClickUpdate(View view) {
@@ -74,13 +93,10 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
     private void setupActionBar() {
         setTitle("Update Profile");
 
-        if (!_profile_exist && getSupportActionBar() != null)
+        if (!_profile_exist && getSupportActionBar() != null) {
+            setTitle("Create A Profile");
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-    }
-
-    private void setupProfileListener() {
-        ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        profileViewModel.getData(FirebaseHelper.getUserProfile()).observe(this, this);
+        }
     }
 
     private void collectUpdateInfo() {
@@ -106,9 +122,11 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
     }
 
     private void updateProfile() {
-        FirebaseUser user = auth.getCurrentUser();
+        dialog = new CatLoadingView();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), "");
 
-        if (user == null) return;
+        FirebaseUser user = FirebaseHelper.getUser();
 
         ProfileModel data = new ProfileModel();
         data.setEmail(user.getEmail());

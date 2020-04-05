@@ -1,6 +1,5 @@
 package com.afiq.myapplication;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,11 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivityRegisterBinding;
+import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.MyDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 public class RegisterActivity extends AppCompatActivity implements OnCompleteListener<AuthResult> {
 
@@ -23,9 +23,7 @@ public class RegisterActivity extends AppCompatActivity implements OnCompleteLis
     private String _error = "";
 
     private ActivityRegisterBinding binding;
-    private ProgressDialog dialog;
-
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private CatLoadingView dialog;
 
 
     @Override
@@ -87,12 +85,11 @@ public class RegisterActivity extends AppCompatActivity implements OnCompleteLis
     }
 
     private void createAccount() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Please wait while we getting your account information");
+        dialog = new CatLoadingView();
         dialog.setCancelable(false);
-        dialog.show();
+        dialog.show(getSupportFragmentManager(), "");
 
-        auth
+        FirebaseHelper.getAuth()
                 .createUserWithEmailAndPassword(_email, _password)
                 .addOnCompleteListener(this);
     }

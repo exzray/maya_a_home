@@ -8,6 +8,10 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_profile"
+        android:title="@string/text_profile" />
+
+    <item
         android:id="@+id/action_about"
         android:title="@string/title_about" />
 

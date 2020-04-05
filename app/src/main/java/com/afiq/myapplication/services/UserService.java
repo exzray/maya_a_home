@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.afiq.myapplication.utilities.FirebaseHelper;
+
 public class UserService extends Service {
 
     public UserService() {
@@ -17,6 +19,8 @@ public class UserService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        FirebaseHelper.getFirestore();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.afiq.myapplication;
 
-import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,11 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivityLoginBinding;
+import com.afiq.myapplication.utilities.FirebaseHelper;
+import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.MyDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 public class LoginActivity extends AppCompatActivity implements OnCompleteListener<AuthResult> {
 
@@ -22,9 +25,7 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
     private String _error = "";
 
     private ActivityLoginBinding binding;
-    private ProgressDialog dialog;
-
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private CatLoadingView dialog;
 
 
     @Override
@@ -34,6 +35,12 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
         setContentView(binding.getRoot());
 
         setupActionBar();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkPreviousUser();
     }
 
     @Override
@@ -84,13 +91,19 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
     }
 
     private void authenticateAccount() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Please wait while we getting your account information");
+        dialog = new CatLoadingView();
         dialog.setCancelable(false);
-        dialog.show();
+        dialog.show(getSupportFragmentManager(), "");
 
-        auth
+        FirebaseHelper.getAuth()
                 .signInWithEmailAndPassword(_email, _password)
                 .addOnCompleteListener(this);
+    }
+
+    private void checkPreviousUser() {
+        SharedPreferences preferences = getSharedPreferences(Interaction.APPLICATION_NAME, Context.MODE_PRIVATE);
+        String _email = preferences.getString(Interaction.SHARED_SAVED_USER_EMAIL, "");
+
+        binding.email.setText(_email);
     }
 }

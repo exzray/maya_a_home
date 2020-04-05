@@ -13,20 +13,27 @@ public class FirebaseHelper {
 
     private static final String FIELD_APPLICANT_ID = "applicantID";
 
+
+    public static FirebaseAuth getAuth() {
+        return FirebaseAuth.getInstance();
+    }
+
+    public static FirebaseUser getUser() {
+        assert getAuth().getCurrentUser() != null;
+        return getAuth().getCurrentUser();
+    }
+
+    public static FirebaseFirestore getFirestore() {
+        return FirebaseFirestore.getInstance();
+    }
+
     public static Query getUserProjectsQuery() {
-        return FirebaseFirestore
-                .getInstance()
+        return getFirestore()
                 .collection(COLLECTION_PROJECTS)
-                .whereEqualTo(FIELD_APPLICANT_ID, getUserID());
+                .whereEqualTo(FIELD_APPLICANT_ID, getUser().getUid());
     }
 
     public static DocumentReference getUserProfile() {
-        return FirebaseFirestore.getInstance().document(COLLECTION_USERS + "/" + getUserID());
-    }
-
-    private static String getUserID() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        return user == null ? "" : user.getUid();
+        return FirebaseFirestore.getInstance().document(COLLECTION_USERS + "/" + getUser().getUid());
     }
 }

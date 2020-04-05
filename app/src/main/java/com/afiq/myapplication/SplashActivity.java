@@ -1,7 +1,8 @@
 package com.afiq.myapplication;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -15,18 +16,17 @@ import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProfileViewModel;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 import static com.afiq.myapplication.utilities.Interaction.EXTRA_BOOLEAN_PROFILE_EXIST;
 
 public class SplashActivity extends AppCompatActivity implements Observer<ProfileModel> {
 
-    private ActivitySplashBinding binding;
     private ProfileViewModel profileViewModel;
 
-    private ProgressDialog dialog;
-
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private ActivitySplashBinding binding;
+    private CatLoadingView dialog;
 
 
     @Override
@@ -73,13 +73,15 @@ public class SplashActivity extends AppCompatActivity implements Observer<Profil
     }
 
     private void checkUser() {
-        if (auth.getCurrentUser() != null) {
-            dialog = new ProgressDialog(this);
-            dialog.setMessage("Checking the profile...");
+        if (FirebaseHelper.getAuth().getCurrentUser() != null) {
+            dialog = new CatLoadingView();
             dialog.setCancelable(false);
-            dialog.show();
+            dialog.show(getSupportFragmentManager(), "");
 
-            profileViewModel.getData(FirebaseHelper.getUserProfile()).observe(this, this);
+            profileViewModel.getData().observe(this, this);
+
+            savedUser(FirebaseHelper.getUser());
+
         } else animate();
     }
 
@@ -89,5 +91,11 @@ public class SplashActivity extends AppCompatActivity implements Observer<Profil
 
         if (data.getStaff()) Interaction.nextEnd(this, mainAdminIntent);
         else Interaction.nextEnd(this, mainIntent);
+    }
+
+    private void savedUser(FirebaseUser user) {
+        SharedPreferences.Editor editor = getSharedPreferences(Interaction.APPLICATION_NAME, Context.MODE_PRIVATE).edit();
+        editor.putString(Interaction.SHARED_SAVED_USER_EMAIL, user.getEmail());
+        editor.apply();
     }
 }

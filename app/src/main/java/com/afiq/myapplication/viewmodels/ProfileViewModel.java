@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.afiq.myapplication.models.ProfileModel;
+import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -21,21 +22,19 @@ public class ProfileViewModel extends ViewModel implements EventListener<Documen
     @Override
     protected void onCleared() {
         super.onCleared();
-
         if (registration != null) registration.remove();
     }
 
     @Override
     public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
         if (snapshot == null) return;
-
         data.setValue(ProfileModel.createInstance(snapshot));
     }
 
-    public LiveData<ProfileModel> getData(DocumentReference reference) {
+    public LiveData<ProfileModel> getData() {
         if (data == null) {
             data = new MutableLiveData<>();
-            loadData(reference);
+            loadData(FirebaseHelper.getUserProfile());
         }
 
         return data;
