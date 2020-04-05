@@ -108,11 +108,9 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
     }
 
     private void actionCode() {
-        FirebaseUser user = FirebaseHelper.getUser();
-
         DialogQrCodeBinding binding = DialogQrCodeBinding.inflate(getLayoutInflater());
 
-        binding.image.setImageBitmap(QrCode.generateBitmapQrCode(user.getUid()));
+        binding.image.setImageBitmap(QrCode.generateBitmapQrCode(FirebaseHelper.getUser().getUid()));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(binding.getRoot());
