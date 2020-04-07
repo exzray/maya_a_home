@@ -15,6 +15,7 @@ public class ProgressModel {
     private String receipt = "";
 
     private Integer payment = 0;
+    private Integer index = 0;
 
     private Boolean isActive = false;
 
@@ -62,6 +63,14 @@ public class ProgressModel {
 
     public void setPayment(Integer payment) {
         this.payment = payment;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public Boolean getActive() {

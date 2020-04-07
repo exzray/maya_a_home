@@ -1,5 +1,6 @@
 package com.afiq.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +45,14 @@ public class ProjectActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_file:
+                Toast.makeText(this, "file", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_chat:
+                Toast.makeText(this, "chat", Toast.LENGTH_SHORT).show();
+                break;
+        }
 
         return false;
     }
@@ -66,6 +75,7 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     private void unPay() {
-        Toast.makeText(this, "Please make payment", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, UploadReceiptActivity.class);
+        startActivity(intent);
     }
 }
