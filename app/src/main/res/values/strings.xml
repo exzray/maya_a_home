@@ -12,4 +12,5 @@
     <string name="text_update_profile">update profile</string>
     <string name="text_profile">Profile</string>
     <string name="text_pay">pay</string>
+    <string name="text_unvailable">Not available yet!</string>
 </resources>

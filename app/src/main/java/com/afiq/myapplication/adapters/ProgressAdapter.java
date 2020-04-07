@@ -86,6 +86,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.VH> {
             binding.pay.setBackground(ContextCompat.getDrawable(itemView.getContext(), getPayDrawable(data)));
 
             binding.payment.setText(payment);
+            binding.note.setVisibility(data.getActive() ? View.GONE : View.VISIBLE);
         }
 
         private String getPayText(ProgressModel data) {
