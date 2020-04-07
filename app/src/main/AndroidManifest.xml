@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainAdminActivity"></activity>
+        <activity android:name=".UploadReceiptActivity"></activity>
+        <activity android:name=".MainAdminActivity" />
 
         <service
             android:name=".services.AdminService"

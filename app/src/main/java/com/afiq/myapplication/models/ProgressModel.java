@@ -12,6 +12,7 @@ public class ProgressModel {
     private STATUS status = STATUS.NOTHING;
 
     private String description = "";
+    private String receipt = "";
 
     private Integer payment = 0;
 
@@ -45,6 +46,14 @@ public class ProgressModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(String receipt) {
+        this.receipt = receipt;
     }
 
     public Integer getPayment() {
