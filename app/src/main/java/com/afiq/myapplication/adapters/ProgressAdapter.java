@@ -8,22 +8,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afiq.myapplication.databinding.ItemProgressBinding;
 import com.afiq.myapplication.models.ProgressModel;
-import com.github.vipulasri.timelineview.TimelineView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.VH> {
+public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.VH> {
 
     private final ActionItemProgress actionItemProgress;
     private final List<ProgressModel> list;
 
-    public TimelineAdapter(ActionItemProgress action) {
+    public ProgressAdapter(ActionItemProgress action) {
         this.actionItemProgress = action;
         this.list = new ArrayList<>();
 
         ProgressModel data = new ProgressModel();
-        data.setDescription("Start project");
+        data.setDescription("Start project  dasd asd asdas das das dasd asd asd asdas d as");
 
         ProgressModel data1 = new ProgressModel();
         data1.setDescription("Outer layout finish");
@@ -52,11 +51,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.VH> {
         return list.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return TimelineView.getTimeLineViewType(position, getItemCount());
-    }
-
     class VH extends RecyclerView.ViewHolder {
 
         private ItemProgressBinding binding;
@@ -66,12 +60,13 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.VH> {
             super(binding.getRoot());
             this.binding = binding;
 
-            binding.timeline.initLine(type);
         }
 
         private void setData(ProgressModel data) {
-            binding.description.setText(data.getDescription());
+
+            binding.getRoot().setOnClickListener(v -> actionItemProgress.onClick(data));
         }
+
     }
 
 

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.afiq.myapplication.adapters.TimelineAdapter;
+import com.afiq.myapplication.adapters.ProgressAdapter;
 import com.afiq.myapplication.databinding.ActivityProjectBinding;
 import com.afiq.myapplication.models.ProgressModel;
 import com.afiq.myapplication.utilities.Interaction;
@@ -16,7 +16,7 @@ public class ProjectActivity extends AppCompatActivity {
     private String _projectUID;
 
     private ActivityProjectBinding binding;
-    private TimelineAdapter timelineAdapter;
+    private ProgressAdapter progressAdapter;
 
 
     @Override
@@ -27,13 +27,13 @@ public class ProjectActivity extends AppCompatActivity {
 
         _projectUID = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROJECT_UID);
 
-        timelineAdapter = new TimelineAdapter(this::onClickItemProgress);
+        progressAdapter = new ProgressAdapter(this::onClickItemProgress);
 
         setupRecycler();
     }
 
     private void setupRecycler() {
-        binding.recycler.setAdapter(timelineAdapter);
+        binding.recycler.setAdapter(progressAdapter);
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
     }
 

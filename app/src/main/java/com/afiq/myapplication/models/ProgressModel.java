@@ -13,6 +13,7 @@ public class ProgressModel {
     private Integer payment = 0;
 
     private Boolean isPay = false;
+    private Boolean isActive = false;
 
 
     public static ProgressModel createInstance(DocumentSnapshot snapshot) {
@@ -58,5 +59,13 @@ public class ProgressModel {
 
     public void setPay(Boolean pay) {
         isPay = pay;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }
