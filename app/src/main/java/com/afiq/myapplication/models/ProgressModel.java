@@ -5,14 +5,16 @@ import com.google.firebase.firestore.Exclude;
 
 public class ProgressModel {
 
+    public enum STATUS {NOTHING, PENDING, SUCCESS, REJECT}
+
     private DocumentSnapshot snapshot;
+
+    private STATUS status = STATUS.NOTHING;
 
     private String description = "";
 
-    private Integer index = 0;
     private Integer payment = 0;
 
-    private Boolean isPay = false;
     private Boolean isActive = false;
 
 
@@ -29,6 +31,14 @@ public class ProgressModel {
         return snapshot;
     }
 
+    public STATUS getStatus() {
+        return status;
+    }
+
+    public void setStatus(STATUS status) {
+        this.status = status;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -37,28 +47,12 @@ public class ProgressModel {
         this.description = description;
     }
 
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
     public Integer getPayment() {
         return payment;
     }
 
     public void setPayment(Integer payment) {
         this.payment = payment;
-    }
-
-    public Boolean getPay() {
-        return isPay;
-    }
-
-    public void setPay(Boolean pay) {
-        isPay = pay;
     }
 
     public Boolean getActive() {

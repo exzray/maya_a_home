@@ -1,10 +1,11 @@
 package com.afiq.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.adapters.ProgressAdapter;
 import com.afiq.myapplication.databinding.ActivityProjectBinding;
@@ -35,9 +36,21 @@ public class ProjectActivity extends AppCompatActivity {
     private void setupRecycler() {
         binding.recycler.setAdapter(progressAdapter);
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
+        binding.recycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
-    private void onClickItemProgress(ProgressModel data){
-        Toast.makeText(this, data.getDescription(), Toast.LENGTH_SHORT).show();
+    private void onClickItemProgress(ProgressModel data) {
+        if (data.getActive()) {
+            if (data.getStatus() == ProgressModel.STATUS.SUCCESS) alreadyPaid();
+            else unPay();
+        }
+    }
+
+    private void alreadyPaid() {
+        Toast.makeText(this, "Thanks for paying", Toast.LENGTH_SHORT).show();
+    }
+
+    private void unPay() {
+        Toast.makeText(this, "Please make payment", Toast.LENGTH_SHORT).show();
     }
 }
