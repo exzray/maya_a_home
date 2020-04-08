@@ -8,8 +8,8 @@ import com.google.firebase.firestore.Query;
 
 public class FirebaseHelper {
 
-    private static final String COLLECTION_USERS = "users";
-    private static final String COLLECTION_PROJECTS = "projects";
+    private static final String COLLECTION_USERS = "mobile/user/documents";
+    private static final String COLLECTION_PROJECTS = "mobile/project/documents";
 
     private static final String FIELD_APPLICANT_ID = "applicantID";
 
@@ -23,7 +23,7 @@ public class FirebaseHelper {
         return getAuth().getCurrentUser();
     }
 
-    public static FirebaseFirestore getFirestore() {
+    private static FirebaseFirestore getFirestore() {
         return FirebaseFirestore.getInstance();
     }
 

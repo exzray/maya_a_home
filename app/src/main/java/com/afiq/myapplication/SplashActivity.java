@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivitySplashBinding;
+import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.services.UserService;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
@@ -90,13 +91,28 @@ public class SplashActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    private void executeAuthType(ProfileModel data) {
+        Intent intent;
+
+        if (data != null) {
+            if (data.getStaff()) intent = new Intent(this, MainAdminActivity.class);
+            else intent = new Intent(this, MainActivity.class);
+        } else intent = new Intent(this, ProfileActivity.class);
+
+        Interaction.nextEnd(this, intent);
+    }
+
+
     private class SplashServiceConnection implements ServiceConnection {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder ibinder) {
             UserService.UserBinder binder = (UserService.UserBinder) ibinder;
             service = binder.getService();
-            service.getProfile().observe(SplashActivity.this, profileModel -> {
+            service.getProfile().observe(SplashActivity.this, data -> {
+
+                executeAuthType(data);
+
                 dialog.dismiss();
                 finish();
             });

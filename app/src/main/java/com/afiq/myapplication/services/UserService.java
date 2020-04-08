@@ -8,13 +8,9 @@ import android.os.IBinder;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.afiq.myapplication.MainActivity;
-import com.afiq.myapplication.MainAdminActivity;
-import com.afiq.myapplication.ProfileActivity;
 import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.utilities.FirebaseHelper;
-import com.afiq.myapplication.utilities.Interaction;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.ListenerRegistration;
 
@@ -61,9 +57,6 @@ public class UserService extends Service {
 
                         ProfileModel data = ProfileModel.createInstance(snapshot);
                         profile.setValue(data);
-
-                        if (profile != null) executeAuthType(data);
-                        else goProfileActivity();
                     });
         }
         return profile;
@@ -102,24 +95,6 @@ public class UserService extends Service {
             listenerProjects.remove();
             listenerProjects = null;
         }
-    }
-
-    private void executeAuthType(ProfileModel data) {
-        Intent intent;
-
-        if (data.getStaff()) intent = new Intent(this, MainAdminActivity.class);
-        else intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        startActivity(intent);
-    }
-
-    private void goProfileActivity() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra(Interaction.EXTRA_BOOLEAN_PROFILE_EXIST, false);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        startActivity(intent);
     }
 
 
