@@ -9,14 +9,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.afiq.myapplication.databinding.ActivityProfileBinding;
 import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.MyDialog;
-import com.afiq.myapplication.viewmodels.ProfileViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,7 +30,6 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
 
     private Boolean _profile_exist;
 
-    private ProfileViewModel profileViewModel;
 
     private ActivityProfileBinding binding;
     private CatLoadingView dialog;
@@ -45,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
         setContentView(binding.getRoot());
 
         _profile_exist = getIntent().getBooleanExtra(Interaction.EXTRA_BOOLEAN_PROFILE_EXIST, true);
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+
 
         setupActionBar();
     }
@@ -53,13 +50,13 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
     @Override
     protected void onStart() {
         super.onStart();
-        profileViewModel.getData().observe(this, this);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        profileViewModel.getData().removeObserver(this);
+
     }
 
     @Override

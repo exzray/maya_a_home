@@ -50,7 +50,7 @@ public class ProjectActivity extends AppCompatActivity {
                 Toast.makeText(this, "file", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_chat:
-                Toast.makeText(this, "chat", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -64,9 +64,15 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     private void onClickItemProgress(ProgressModel data) {
-        if (data.getActive()) {
-            if (data.getStatus() == ProgressModel.STATUS.SUCCESS) alreadyPaid();
-            else unPay();
+        switch (data.getStatus()) {
+            case NOTHING:
+            case REJECT:
+                unPay();
+                break;
+            case PENDING:
+            case SUCCESS:
+                alreadyPaid();
+                break;
         }
     }
 

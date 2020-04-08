@@ -1,32 +1,32 @@
 package com.afiq.myapplication;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.afiq.myapplication.databinding.ActivitySplashBinding;
-import com.afiq.myapplication.models.ProfileModel;
+import com.afiq.myapplication.services.UserService;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
-import com.afiq.myapplication.viewmodels.ProfileViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.roger.catloadinglibrary.CatLoadingView;
 
-import static com.afiq.myapplication.utilities.Interaction.EXTRA_BOOLEAN_PROFILE_EXIST;
-
-public class SplashActivity extends AppCompatActivity implements Observer<ProfileModel> {
-
-    private ProfileViewModel profileViewModel;
+public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
     private CatLoadingView dialog;
+
+    private Intent intent;
+    private UserService service;
+    private SplashServiceConnection serviceConnection;
 
 
     @Override
@@ -37,7 +37,15 @@ public class SplashActivity extends AppCompatActivity implements Observer<Profil
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        intent = new Intent(this, UserService.class);
+        serviceConnection = new SplashServiceConnection();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (service != null) unbindService(serviceConnection);
     }
 
     @Override
@@ -47,16 +55,6 @@ public class SplashActivity extends AppCompatActivity implements Observer<Profil
         checkUser();
     }
 
-    @Override
-    public void onChanged(ProfileModel data) {
-        dialog.dismiss();
-
-        Intent profileIntent = new Intent(this, ProfileActivity.class);
-        profileIntent.putExtra(EXTRA_BOOLEAN_PROFILE_EXIST, (data != null));
-
-        if (data == null) Interaction.nextEnd(this, profileIntent);
-        else userPrivillege(data);
-    }
 
     public void onClickSignIn(View view) {
         Interaction.next(this, LoginActivity.class);
@@ -78,24 +76,35 @@ public class SplashActivity extends AppCompatActivity implements Observer<Profil
             dialog.setCancelable(false);
             dialog.show(getSupportFragmentManager(), "");
 
-            profileViewModel.getData().observe(this, this);
-
             savedUser(FirebaseHelper.getUser());
 
+            startService(intent);
+            bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+
         } else animate();
-    }
-
-    private void userPrivillege(ProfileModel data) {
-        Intent mainIntent = new Intent(this, MainActivity.class);
-        Intent mainAdminIntent = new Intent(this, MainAdminActivity.class);
-
-        if (data.getStaff()) Interaction.nextEnd(this, mainAdminIntent);
-        else Interaction.nextEnd(this, mainIntent);
     }
 
     private void savedUser(FirebaseUser user) {
         SharedPreferences.Editor editor = getSharedPreferences(Interaction.APPLICATION_NAME, Context.MODE_PRIVATE).edit();
         editor.putString(Interaction.SHARED_SAVED_USER_EMAIL, user.getEmail());
         editor.apply();
+    }
+
+    private class SplashServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder ibinder) {
+            UserService.UserBinder binder = (UserService.UserBinder) ibinder;
+            service = binder.getService();
+            service.getProfile().observe(SplashActivity.this, profileModel -> {
+                dialog.dismiss();
+                finish();
+            });
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            service = null;
+        }
     }
 }

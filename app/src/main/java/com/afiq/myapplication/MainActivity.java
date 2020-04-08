@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.adapters.ProjectAdapter;
@@ -20,7 +19,6 @@ import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
-import com.afiq.myapplication.viewmodels.ProjectViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
@@ -29,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
 
     private ActivityMainBinding binding;
 
-    private ProjectViewModel projectViewModel;
     private ProjectAdapter projectAdapter;
 
 
@@ -40,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
         setContentView(binding.getRoot());
 
         projectAdapter = new ProjectAdapter(this::onClickProject);
-        projectViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
         setupRecycler();
     }
@@ -48,13 +44,13 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
     @Override
     protected void onStart() {
         super.onStart();
-        projectViewModel.getUserProjects().observe(this, this);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        projectViewModel.getUserProjects().removeObserver(this);
+
     }
 
     @Override
