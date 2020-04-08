@@ -24,6 +24,9 @@ import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 

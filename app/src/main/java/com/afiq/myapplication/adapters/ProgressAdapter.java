@@ -94,16 +94,16 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.VH> {
 
             switch (data.getStatus()) {
                 case NOTHING:
-                    text = "pay now";
+                    text = "Upload";
                     break;
                 case SUCCESS:
-                    text = "paid";
+                    text = "Approved";
                     break;
                 case REJECT:
                     text = "decline";
                     break;
                 case PENDING:
-                    text = "process";
+                    text = "in-process";
                     break;
             }
 
