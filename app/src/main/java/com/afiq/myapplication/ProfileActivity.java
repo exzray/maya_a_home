@@ -1,17 +1,21 @@
 package com.afiq.myapplication;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
 import com.afiq.myapplication.databinding.ActivityProfileBinding;
 import com.afiq.myapplication.models.ProfileModel;
+import com.afiq.myapplication.services.UserService;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.MyDialog;
@@ -21,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.SetOptions;
 import com.roger.catloadinglibrary.CatLoadingView;
 
-public class ProfileActivity extends AppCompatActivity implements Observer<ProfileModel>, OnCompleteListener<Void> {
+public class ProfileActivity extends AppCompatActivity implements OnCompleteListener<Void> {
 
     private String _name = "";
     private String _contact = "";
@@ -30,9 +34,11 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
 
     private Boolean _profile_exist;
 
-
     private ActivityProfileBinding binding;
     private CatLoadingView dialog;
+
+    private UserService service;
+    private ProfileServiceConnection serviceConnection;
 
 
     @Override
@@ -43,33 +49,15 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
 
         _profile_exist = getIntent().getBooleanExtra(Interaction.EXTRA_BOOLEAN_PROFILE_EXIST, true);
 
+        bindService();
 
         setupActionBar();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    public void onChanged(ProfileModel data) {
-        Intent intent = new Intent(this, MainActivity.class);
-
-        if (data != null) {
-            binding.name.setText(data.getName());
-            binding.contact.setText(data.getContact());
-            binding.address.setText(data.getAddress());
-
-            if (!_profile_exist) Interaction.nextEnd(this, intent);
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
     }
 
     @Override
@@ -85,6 +73,13 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
 
     public void onClickUpdate(View view) {
         collectUpdateInfo();
+    }
+
+    private void bindService() {
+        Intent intent = new Intent(this, UserService.class);
+        serviceConnection = new ProfileServiceConnection();
+
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void setupActionBar() {
@@ -135,5 +130,29 @@ public class ProfileActivity extends AppCompatActivity implements Observer<Profi
                 .getUserProfile()
                 .set(data, SetOptions.merge())
                 .addOnCompleteListener(this);
+    }
+
+    private class ProfileServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            service = ((UserService.UserBinder) binder).getService();
+            service.getProfile().observe(ProfileActivity.this, data -> {
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+
+                if (data != null) {
+                    binding.name.setText(data.getName());
+                    binding.contact.setText(data.getContact());
+                    binding.address.setText(data.getAddress());
+
+                    if (!_profile_exist) Interaction.nextEnd(ProfileActivity.this, intent);
+                }
+            });
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            service = null;
+        }
     }
 }

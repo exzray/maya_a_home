@@ -97,7 +97,10 @@ public class SplashActivity extends AppCompatActivity {
         if (data != null) {
             if (data.getStaff()) intent = new Intent(this, MainAdminActivity.class);
             else intent = new Intent(this, MainActivity.class);
-        } else intent = new Intent(this, ProfileActivity.class);
+        } else {
+            intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra(Interaction.EXTRA_BOOLEAN_PROFILE_EXIST, false);
+        }
 
         Interaction.nextEnd(this, intent);
     }
