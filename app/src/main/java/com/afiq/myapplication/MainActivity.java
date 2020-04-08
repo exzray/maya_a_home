@@ -41,11 +41,6 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
         setupRecycler();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     protected void onDestroy() {
