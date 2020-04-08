@@ -152,7 +152,7 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            service = null;
+            service.getProfile().removeObservers(ProfileActivity.this);
         }
     }
 }

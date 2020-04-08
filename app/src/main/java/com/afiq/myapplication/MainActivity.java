@@ -1,7 +1,11 @@
 package com.afiq.myapplication;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -9,25 +13,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.adapters.ProjectAdapter;
 import com.afiq.myapplication.databinding.ActivityMainBinding;
 import com.afiq.myapplication.databinding.DialogQrCodeBinding;
 import com.afiq.myapplication.models.ProjectModel;
+import com.afiq.myapplication.services.UserService;
 import com.afiq.myapplication.utilities.FirebaseHelper;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements Observer<List<ProjectModel>> {
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
     private ProjectAdapter projectAdapter;
+
+    private UserService service;
+    private MainServiceConnection serviceConnection;
 
 
     @Override
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
 
         projectAdapter = new ProjectAdapter(this::onClickProject);
 
+        bindService();
         setupRecycler();
     }
 
@@ -45,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        unbindService(serviceConnection);
     }
 
     @Override
@@ -75,9 +81,11 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
         return false;
     }
 
-    @Override
-    public void onChanged(List<ProjectModel> list) {
-        projectAdapter.update(list);
+    private void bindService() {
+        Intent intent = new Intent(this, UserService.class);
+        serviceConnection = new MainServiceConnection();
+
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void onClickProject(ProjectModel data) {
@@ -117,5 +125,20 @@ public class MainActivity extends AppCompatActivity implements Observer<List<Pro
     private void actionLogout() {
         FirebaseHelper.getAuth().signOut();
         updateUI(FirebaseHelper.getAuth().getCurrentUser());
+    }
+
+
+    private class MainServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            service = ((UserService.UserBinder) binder).getService();
+            service.getProjects().observe(MainActivity.this, list -> projectAdapter.update(list));
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            service.getProjects().removeObservers(MainActivity.this);
+        }
     }
 }
