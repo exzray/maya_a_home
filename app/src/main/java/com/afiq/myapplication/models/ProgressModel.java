@@ -11,7 +11,10 @@ public class ProgressModel {
 
     private STATUS status = STATUS.NOTHING;
 
+    private String applicantID = "";
+    private String agentID = "";
     private String description = "";
+    private String reason = "";
     private String receipt = "";
 
     private Integer payment = 0;
@@ -41,12 +44,36 @@ public class ProgressModel {
         this.status = status;
     }
 
+    public String getApplicantID() {
+        return applicantID;
+    }
+
+    public void setApplicantID(String applicantID) {
+        this.applicantID = applicantID;
+    }
+
+    public String getAgentID() {
+        return agentID;
+    }
+
+    public void setAgentID(String agentID) {
+        this.agentID = agentID;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public String getReceipt() {

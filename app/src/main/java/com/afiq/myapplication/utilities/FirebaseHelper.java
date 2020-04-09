@@ -10,6 +10,7 @@ public class FirebaseHelper {
 
     private static final String COLLECTION_USERS = "mobile/user/documents";
     private static final String COLLECTION_PROJECTS = "mobile/project/documents";
+    private static final String COLLECTION_PROGRESSES = "mobile/progress/documents";
 
     private static final String FIELD_APPLICANT_ID = "applicantID";
 
@@ -30,6 +31,13 @@ public class FirebaseHelper {
     public static Query getUserProjectsQuery() {
         return getFirestore()
                 .collection(COLLECTION_PROJECTS)
+                .whereEqualTo(FIELD_APPLICANT_ID, getUser().getUid())
+                .orderBy("created");
+    }
+
+    public static Query getUserProgressesQuery() {
+        return getFirestore()
+                .collection(COLLECTION_PROGRESSES)
                 .whereEqualTo(FIELD_APPLICANT_ID, getUser().getUid());
     }
 
