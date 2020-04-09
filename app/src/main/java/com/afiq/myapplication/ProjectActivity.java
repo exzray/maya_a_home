@@ -1,7 +1,10 @@
 package com.afiq.myapplication;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.afiq.myapplication.adapters.ProgressAdapter;
 import com.afiq.myapplication.databinding.ActivityProjectBinding;
 import com.afiq.myapplication.models.ProgressModel;
+import com.afiq.myapplication.services.UserService;
 import com.afiq.myapplication.utilities.Interaction;
 
 public class ProjectActivity extends AppCompatActivity {
@@ -22,6 +26,8 @@ public class ProjectActivity extends AppCompatActivity {
 
     private ActivityProjectBinding binding;
     private ProgressAdapter progressAdapter;
+
+    private UserService service;
 
 
     @Override
@@ -83,5 +89,20 @@ public class ProjectActivity extends AppCompatActivity {
     private void unPay() {
         Intent intent = new Intent(this, UploadReceiptActivity.class);
         startActivity(intent);
+    }
+
+
+    private class ProjectServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            service = ((UserService.UserBinder) binder).getService();
+            service.getProjects().observe(ProjectActivity.this, list -> Toast.makeText(service, "lala", Toast.LENGTH_SHORT).show());
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            service.getProjects().removeObservers(ProjectActivity.this);
+        }
     }
 }
