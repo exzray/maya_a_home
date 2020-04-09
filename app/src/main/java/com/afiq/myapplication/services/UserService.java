@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.afiq.myapplication.models.ProfileModel;
+import com.afiq.myapplication.models.ProgressModel;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.utilities.Database;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -21,9 +22,11 @@ public class UserService extends Service {
 
     private MutableLiveData<ProfileModel> profile;
     private MutableLiveData<List<ProjectModel>> projects;
+    private MutableLiveData<List<ProgressModel>> progress;
 
     private ListenerRegistration listenerProfile;
     private ListenerRegistration listenerProjects;
+    private ListenerRegistration listenerProgress;
 
     private IBinder binder = new UserBinder();
 
@@ -34,6 +37,7 @@ public class UserService extends Service {
 
         stopProfile();
         stopProjects();
+        stopProgress();
     }
 
     @Override
@@ -94,6 +98,13 @@ public class UserService extends Service {
         if (listenerProjects != null) {
             listenerProjects.remove();
             listenerProjects = null;
+        }
+    }
+
+    private void stopProgress() {
+        if (listenerProgress != null) {
+            listenerProgress.remove();
+            listenerProgress = null;
         }
     }
 
