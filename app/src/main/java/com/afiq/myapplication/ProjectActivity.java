@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.afiq.myapplication.adapters.ProgressAdapter;
 import com.afiq.myapplication.databinding.ActivityProjectBinding;
 import com.afiq.myapplication.models.ProgressModel;
+import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
+import com.afiq.myapplication.viewmodels.ProgressListViewModel;
 import com.afiq.myapplication.viewmodels.ProjectViewModel;
 
 public class ProjectActivity extends AppCompatActivity {
@@ -71,9 +73,21 @@ public class ProjectActivity extends AppCompatActivity {
         ProjectViewModel vm = new ViewModelProvider(this).get(ProjectViewModel.class);
         vm
                 .getData(Database.refProject(_projectID))
-                .observe(this, data -> {
-                    setTitle(data.getLabel());
-                });
+                .observe(this, this::updateUI);
+    }
+
+    private void setupProgressListViewModel(String project_id) {
+        ProgressListViewModel vm = new ViewModelProvider(this).get(ProgressListViewModel.class);
+        vm
+                .getData(Database.queryProgressList(project_id))
+                .observe(this, list -> progressAdapter.update(list));
+    }
+
+    private void updateUI(ProjectModel project) {
+        setTitle(project.getLabel());
+
+        // retrieve progress for this project only
+        setupProgressListViewModel(project.getSnapshot().getId());
     }
 
     private void onClickItemProgress(ProgressModel data) {

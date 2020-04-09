@@ -23,30 +23,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.VH> {
     public ProgressAdapter(ActionItemProgress action) {
         this.actionItemProgress = action;
         this.list = new ArrayList<>();
-
-        ProgressModel data = new ProgressModel();
-        data.setDescription("Stage 1");
-
-        ProgressModel data1 = new ProgressModel();
-        data1.setActive(true);
-        data1.setStatus(ProgressModel.STATUS.REJECT);
-        data1.setDescription("Stage 2");
-
-        ProgressModel data2 = new ProgressModel();
-        data2.setActive(true);
-        data2.setDescription("Stage 3");
-
-        ProgressModel data3 = new ProgressModel();
-        data3.setDescription("Stage 4");
-
-        ProgressModel data4 = new ProgressModel();
-        data4.setDescription("Stage 5");
-
-        list.add(data);
-        list.add(data1);
-        list.add(data2);
-        list.add(data3);
-        list.add(data4);
     }
 
     @NonNull
@@ -64,6 +40,13 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.VH> {
     public int getItemCount() {
         return list.size();
     }
+
+    public void update(List<ProgressModel> list) {
+        this.list.clear();
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     class VH extends RecyclerView.ViewHolder {
 
