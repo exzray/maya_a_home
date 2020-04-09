@@ -20,6 +20,7 @@ import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProgressListViewModel;
 import com.afiq.myapplication.viewmodels.ProjectViewModel;
+import com.google.firebase.firestore.Query;
 
 public class ProjectActivity extends AppCompatActivity {
 
@@ -77,10 +78,10 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     private void setupProgressListViewModel(String project_id) {
+        Query query = Database.queryProgressList(project_id);
+
         ProgressListViewModel vm = new ViewModelProvider(this).get(ProgressListViewModel.class);
-        vm
-                .getData(Database.queryProgressList(project_id))
-                .observe(this, list -> progressAdapter.update(list));
+        vm.getData(query).observe(this, list -> progressAdapter.update(list));
     }
 
     private void updateUI(ProjectModel project) {
