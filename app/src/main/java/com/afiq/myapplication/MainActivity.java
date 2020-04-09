@@ -20,13 +20,11 @@ import com.afiq.myapplication.databinding.ActivityMainBinding;
 import com.afiq.myapplication.databinding.DialogQrCodeBinding;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.services.UserService;
-import com.afiq.myapplication.utilities.FirebaseHelper;
+import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -112,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private void actionCode() {
         DialogQrCodeBinding binding = DialogQrCodeBinding.inflate(getLayoutInflater());
 
-        binding.image.setImageBitmap(QrCode.generateBitmapQrCode(FirebaseHelper.getUser().getUid()));
+        binding.image.setImageBitmap(QrCode.generateBitmapQrCode(Database.getUser().getUid()));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(binding.getRoot());
@@ -126,8 +124,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void actionLogout() {
-        FirebaseHelper.getAuth().signOut();
-        updateUI(FirebaseHelper.getAuth().getCurrentUser());
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.signOut();
+        updateUI(auth.getCurrentUser());
     }
 
 

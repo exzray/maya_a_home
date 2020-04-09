@@ -15,8 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.afiq.myapplication.databinding.ActivitySplashBinding;
 import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.services.UserService;
-import com.afiq.myapplication.utilities.FirebaseHelper;
+import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.roger.catloadinglibrary.CatLoadingView;
 
@@ -72,12 +73,14 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkUser() {
-        if (FirebaseHelper.getAuth().getCurrentUser() != null) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
             dialog = new CatLoadingView();
             dialog.setCancelable(false);
             dialog.show(getSupportFragmentManager(), "");
 
-            savedUser(FirebaseHelper.getUser());
+            savedUser(Database.getUser());
 
             startService(intent);
             bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);

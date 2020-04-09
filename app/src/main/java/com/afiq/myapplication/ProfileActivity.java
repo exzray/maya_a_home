@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.afiq.myapplication.databinding.ActivityProfileBinding;
 import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.services.UserService;
-import com.afiq.myapplication.utilities.FirebaseHelper;
+import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.MyDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -118,7 +118,7 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "");
 
-        FirebaseUser user = FirebaseHelper.getUser();
+        FirebaseUser user = Database.getUser();
 
         ProfileModel data = new ProfileModel();
         data.setEmail(user.getEmail());
@@ -126,8 +126,8 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
         data.setContact(_contact);
         data.setAddress(_address);
 
-        FirebaseHelper
-                .getUserProfile()
+        Database
+                .refProfile()
                 .set(data, SetOptions.merge())
                 .addOnCompleteListener(this);
     }

@@ -1,33 +1,30 @@
 package com.afiq.myapplication;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.adapters.ProgressAdapter;
 import com.afiq.myapplication.databinding.ActivityProjectBinding;
 import com.afiq.myapplication.models.ProgressModel;
-import com.afiq.myapplication.services.UserService;
+import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
+import com.afiq.myapplication.viewmodels.ProjectViewModel;
 
 public class ProjectActivity extends AppCompatActivity {
 
-    private String _projectUID;
+    private String _projectID;
 
     private ActivityProjectBinding binding;
     private ProgressAdapter progressAdapter;
-
-    private UserService service;
 
 
     @Override
@@ -36,11 +33,12 @@ public class ProjectActivity extends AppCompatActivity {
         binding = ActivityProjectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        _projectUID = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROJECT_UID);
+        _projectID = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROJECT_UID);
 
         progressAdapter = new ProgressAdapter(this::onClickItemProgress);
 
         setupRecycler();
+        setupProjectViewModel();
     }
 
     @Override
@@ -69,6 +67,15 @@ public class ProjectActivity extends AppCompatActivity {
         binding.recycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
+    private void setupProjectViewModel() {
+        ProjectViewModel vm = new ViewModelProvider(this).get(ProjectViewModel.class);
+        vm
+                .getData(Database.refProject(_projectID))
+                .observe(this, data -> {
+                    setTitle(data.getLabel());
+                });
+    }
+
     private void onClickItemProgress(ProgressModel data) {
         switch (data.getStatus()) {
             case NOTHING:
@@ -89,20 +96,5 @@ public class ProjectActivity extends AppCompatActivity {
     private void unPay() {
         Intent intent = new Intent(this, UploadReceiptActivity.class);
         startActivity(intent);
-    }
-
-
-    private class ProjectServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-            service = ((UserService.UserBinder) binder).getService();
-            service.getProjects().observe(ProjectActivity.this, list -> Toast.makeText(service, "lala", Toast.LENGTH_SHORT).show());
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            service.getProjects().removeObservers(ProjectActivity.this);
-        }
     }
 }

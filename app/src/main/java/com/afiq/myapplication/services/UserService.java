@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.models.ProjectModel;
-import com.afiq.myapplication.utilities.FirebaseHelper;
+import com.afiq.myapplication.utilities.Database;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.ListenerRegistration;
 
@@ -50,8 +50,8 @@ public class UserService extends Service {
         if (profile == null) profile = new MutableLiveData<>();
 
         if (listenerProfile == null) {
-            listenerProfile = FirebaseHelper
-                    .getUserProfile()
+            listenerProfile = Database
+                    .refProfile()
                     .addSnapshotListener((snapshot, e) -> {
                         if (snapshot == null) return;
 
@@ -66,8 +66,8 @@ public class UserService extends Service {
         if (projects == null) projects = new MutableLiveData<>();
 
         if (listenerProjects == null) {
-            listenerProjects = FirebaseHelper
-                    .getUserProjectsQuery()
+            listenerProjects = Database
+                    .queryUserProjectList()
                     .addSnapshotListener((queryDocumentSnapshots, e) -> {
                         if (queryDocumentSnapshots == null) return;
 

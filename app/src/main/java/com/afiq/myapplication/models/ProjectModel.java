@@ -10,7 +10,7 @@ public class ProjectModel {
     private DocumentSnapshot snapshot;
 
     private String label = "";
-    private String applicantID = "";
+    private String userID = "";
     private String agentID = "";
 
     private Integer totalCost = 0;
@@ -40,12 +40,12 @@ public class ProjectModel {
         this.label = label;
     }
 
-    public String getApplicantID() {
-        return applicantID;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setApplicantID(String applicantID) {
-        this.applicantID = applicantID;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getAgentID() {

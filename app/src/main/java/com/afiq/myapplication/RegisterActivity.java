@@ -8,11 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivityRegisterBinding;
-import com.afiq.myapplication.utilities.FirebaseHelper;
+import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.MyDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.roger.catloadinglibrary.CatLoadingView;
 
 public class RegisterActivity extends AppCompatActivity implements OnCompleteListener<AuthResult> {
@@ -89,7 +90,8 @@ public class RegisterActivity extends AppCompatActivity implements OnCompleteLis
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "");
 
-        FirebaseHelper.getAuth()
+        FirebaseAuth
+                .getInstance()
                 .createUserWithEmailAndPassword(_email, _password)
                 .addOnCompleteListener(this);
     }

@@ -25,7 +25,7 @@ public class ProgressListViewModel extends ViewModel {
     }
 
     public LiveData<List<ProgressModel>> getData(Query query) {
-        if (data != null) data = new MutableLiveData<>();
+        if (data == null) data = new MutableLiveData<>();
         startListener(query);
 
         return data;

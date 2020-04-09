@@ -21,7 +21,7 @@ public class ProjectViewModel extends ViewModel {
     }
 
     public LiveData<ProjectModel> getData(DocumentReference reference) {
-        if (data != null) data = new MutableLiveData<>();
+        if (data == null) data = new MutableLiveData<>();
         startListener(reference);
 
         return data;
