@@ -14,31 +14,44 @@
         android:textColor="@color/blue_grey_700"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/pay"
-        android:layout_width="120dp"
-        android:layout_height="32dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/description"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/button_unpay"
-        android:stateListAnimator="@null"
-        android:text="@string/text_pay"
-        android:textColor="@color/white" />
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/pay"
-        android:layout_alignParentEnd="true"
-        android:text="@string/text_unvailable"
-        android:visibility="gone" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-    <TextView
-        android:id="@+id/payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/pay"
-        android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/payment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/note"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_unvailable"
+                android:textAlignment="viewEnd"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/pay"
+            android:layout_width="120dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_unpay"
+            android:stateListAnimator="@null"
+            android:text="@string/text_pay"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </RelativeLayout>

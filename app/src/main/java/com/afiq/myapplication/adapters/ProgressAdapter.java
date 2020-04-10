@@ -65,7 +65,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.VH> {
 
             binding.pay.setText(getPayText(data));
             binding.pay.setOnClickListener(v -> actionItemProgress.onClick(data));
-            binding.pay.setVisibility(data.getActive() ? View.VISIBLE : View.INVISIBLE);
+            binding.pay.setVisibility(data.getActive() ? View.VISIBLE : View.GONE);
             binding.pay.setBackground(ContextCompat.getDrawable(itemView.getContext(), getPayDrawable(data)));
 
             binding.payment.setText(payment);

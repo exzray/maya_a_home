@@ -20,6 +20,7 @@ import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProgressListViewModel;
 import com.afiq.myapplication.viewmodels.ProjectViewModel;
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.Query;
 
 public class ProjectActivity extends AppCompatActivity {
@@ -40,6 +41,7 @@ public class ProjectActivity extends AppCompatActivity {
 
         progressAdapter = new ProgressAdapter(this::onClickItemProgress);
 
+        setupBanner();
         setupRecycler();
         setupProjectViewModel();
     }
@@ -64,6 +66,10 @@ public class ProjectActivity extends AppCompatActivity {
         return false;
     }
 
+    private void setupBanner() {
+        Glide.with(this).load(R.drawable.progress).into(binding.banner);
+    }
+
     private void setupRecycler() {
         binding.recycler.setAdapter(progressAdapter);
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -86,6 +92,9 @@ public class ProjectActivity extends AppCompatActivity {
 
     private void updateUI(ProjectModel project) {
         setTitle(project.getLabel());
+
+        String payment_str = "RM " + project.getTotalCost();
+        binding.payment.setText(payment_str);
 
         // retrieve progress for this project only
         setupProgressListViewModel(project.getSnapshot().getId());

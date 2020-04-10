@@ -13,4 +13,5 @@
     <string name="text_profile">Profile</string>
     <string name="text_pay">pay</string>
     <string name="text_unvailable">Not available yet!</string>
+    <string name="text_total_payment">RM 20000</string>
 </resources>
