@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:hardwareAccelerated="true"
@@ -13,9 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UploadReceiptActivity"/>
-        <activity android:name=".MainAdminActivity" />
-
         <service
             android:name=".services.AdminService"
             android:enabled="true"
@@ -45,6 +43,10 @@
         <activity
             android:name=".ProjectActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".UploadReceiptActivity"
+            android:parentActivityName=".ProjectActivity" />
+        <activity android:name=".MainAdminActivity" />
     </application>
 
 </manifest>

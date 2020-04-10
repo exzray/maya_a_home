@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.afiq.myapplication.App;
 import com.afiq.myapplication.R;
 import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.models.ProgressModel;
@@ -25,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService extends Service {
-
-    private final String NOTIFICATION_CHANNEL_ID = "project";
 
     private MutableLiveData<ProfileModel> profile;
     private MutableLiveData<List<ProjectModel>> projects;
@@ -129,19 +128,13 @@ public class UserService extends Service {
 
     private void showProjectNotification(DocumentSnapshot snapshot) {
         NotificationManager manager = getSystemService(NotificationManager.class);
-
         assert manager != null;
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, App.NOTIFICATION_CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_extension);
         builder.setContentTitle("Project Notification");
         builder.setContentText(ProjectModel.createInstance(snapshot).getLabel());
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Project", NotificationManager.IMPORTANCE_HIGH);
-            manager.createNotificationChannel(channel);
-        }
 
         manager.notify(1, builder.build());
     }
