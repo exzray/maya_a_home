@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onClickProject(ProjectModel data) {
         Intent intent = new Intent(this, ProjectActivity.class);
-        intent.putExtra(Interaction.EXTRA_STRING_PROJECT_UID, data.getSnapshot().getId());
+        intent.putExtra(Interaction.EXTRA_STRING_PROJECT_ID, data.getSnapshot().getId());
 
         startActivity(intent);
     }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".UploadTransferActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/viewer"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/grey_200"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_submit"
+            android:stateListAnimator="@null"
+            android:onClick="onClickUpload"
+            android:text="@string/text_upload"
+            android:textColor="@color/deep_orange_600" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="30dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="30dp">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:inputType="numberDecimal"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabelText="Amount Transfer (RM)" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/reference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabelText="Recipient Reference" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_primary"
+        android:onClick="onClickSubmit"
+        android:text="@string/text_submit"
+        android:textColor="@color/white" />
+</LinearLayout>

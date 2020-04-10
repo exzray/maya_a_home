@@ -45,5 +45,4 @@
         android:background="@drawable/button_primary"
         android:text="@string/text_signin"
         android:textColor="@color/white" />
-
 </RelativeLayout>

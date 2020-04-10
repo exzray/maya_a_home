@@ -3,6 +3,7 @@
     package="com.afiq.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".App"
@@ -44,7 +45,7 @@
             android:name=".ProjectActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".UploadReceiptActivity"
+            android:name=".UploadTransferActivity"
             android:parentActivityName=".ProjectActivity" />
         <activity android:name=".MainAdminActivity" />
     </application>

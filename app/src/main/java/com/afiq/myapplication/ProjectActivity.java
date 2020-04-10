@@ -37,7 +37,7 @@ public class ProjectActivity extends AppCompatActivity {
         binding = ActivityProjectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        _projectID = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROJECT_UID);
+        _projectID = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROJECT_ID);
 
         progressAdapter = new ProgressAdapter(this::onClickItemProgress);
 
@@ -104,7 +104,7 @@ public class ProjectActivity extends AppCompatActivity {
         switch (data.getStatus()) {
             case NOTHING:
             case REJECT:
-                unPay();
+                unPay(data);
                 break;
             case PENDING:
             case SUCCESS:
@@ -117,8 +117,18 @@ public class ProjectActivity extends AppCompatActivity {
         Toast.makeText(this, "Thanks for paying", Toast.LENGTH_SHORT).show();
     }
 
-    private void unPay() {
-        Intent intent = new Intent(this, UploadReceiptActivity.class);
+    private void unPay(ProgressModel data) {
+        String project_id = _projectID;
+        String user_id = data.getUserID();
+        String agent_id = data.getAgentID();
+        String progress_id = data.getSnapshot().getId();
+
+        Intent intent = new Intent(this, UploadTransferActivity.class);
+        intent.putExtra(Interaction.EXTRA_STRING_USER_ID, user_id);
+        intent.putExtra(Interaction.EXTRA_STRING_AGENT_ID, agent_id);
+        intent.putExtra(Interaction.EXTRA_STRING_PROJECT_ID, progress_id);
+        intent.putExtra(Interaction.EXTRA_STRING_PROGRESS_ID, project_id);
+
         startActivity(intent);
     }
 }

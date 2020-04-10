@@ -14,4 +14,6 @@
     <string name="text_pay">pay</string>
     <string name="text_unvailable">Not available yet!</string>
     <string name="text_total_payment">RM 20000</string>
+    <string name="text_upload">upload</string>
+    <string name="text_submit">submit</string>
 </resources>
