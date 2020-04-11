@@ -48,6 +48,12 @@ public class Database {
                 .whereEqualTo(FIELD_AGENT_ID, getUser().getUid());
     }
 
+    public static Query queryUserProgressList() {
+        return getFirestore()
+                .collection(COLLECTION_PROGRESS)
+                .whereEqualTo(FIELD_USER_ID, getUser().getUid());
+    }
+
     public static Query queryProgressList(String project_id) {
         return getFirestore()
                 .collection(COLLECTION_PROGRESS)

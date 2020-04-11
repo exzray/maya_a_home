@@ -30,6 +30,9 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         String title = "" + intent.getStringExtra(Interaction.EXTRA_STRING_TITLE);
         String message = "" + intent.getStringExtra(Interaction.EXTRA_STRING_MESSAGE);
+
+        int id = intent.getIntExtra(Interaction.EXTRA_INT_NOTIFICATION_ID, 1);
+
         Uri uri = Uri.parse("android.resource://com.afiq.myapplication/" + R.raw.notification);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, App.NOTIFICATION_CHANNEL_ID);
@@ -39,6 +42,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         builder.setSound(uri);
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        manager.notify(1, builder.build());
+        manager.notify(id, builder.build());
     }
 }
