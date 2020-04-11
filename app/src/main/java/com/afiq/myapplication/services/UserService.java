@@ -1,21 +1,19 @@
 package com.afiq.myapplication.services;
 
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.afiq.myapplication.App;
-import com.afiq.myapplication.R;
+import com.afiq.myapplication.broadcasts.NotificationReceiver;
 import com.afiq.myapplication.models.ProfileModel;
 import com.afiq.myapplication.models.ProgressModel;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.utilities.Database;
+import com.afiq.myapplication.utilities.Interaction;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -101,8 +99,11 @@ public class UserService extends Service {
                             list.add(ProjectModel.createInstance(snapshot));
 
                         for (DocumentChange change : queryDocumentSnapshots.getDocumentChanges()) {
+                            ProjectModel data = change.getDocument().toObject(ProjectModel.class);
+
                             if (change.getType() == DocumentChange.Type.MODIFIED)
-                                showProjectNotification(change.getDocument());
+
+                                broadcastNotification("Project Notification", data.getLabel());
                         }
 
                         if (projects != null) projects.setValue(list);
@@ -124,17 +125,12 @@ public class UserService extends Service {
         }
     }
 
-    private void showProjectNotification(DocumentSnapshot snapshot) {
-        NotificationManager manager = getSystemService(NotificationManager.class);
-        assert manager != null;
+    private void broadcastNotification(String title, String message) {
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        intent.putExtra(Interaction.EXTRA_STRING_TITLE, title);
+        intent.putExtra(Interaction.EXTRA_STRING_MESSAGE, message);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, App.NOTIFICATION_CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.ic_extension);
-        builder.setContentTitle("Project Notification");
-        builder.setContentText(ProjectModel.createInstance(snapshot).getLabel());
-        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        manager.notify(1, builder.build());
+        sendBroadcast(intent);
     }
 
 

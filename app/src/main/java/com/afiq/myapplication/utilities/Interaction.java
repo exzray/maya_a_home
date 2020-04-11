@@ -10,7 +10,8 @@ public class Interaction {
 
     public static final String SHARED_SAVED_USER_EMAIL = "saveUserEmail";
 
-    public static final String EXTRA_STRING_USER_ID = "userID";
+    public static final String EXTRA_STRING_TITLE = "title";
+    public static final String EXTRA_STRING_MESSAGE = "message";
     public static final String EXTRA_STRING_AGENT_ID = "agentID";
     public static final String EXTRA_STRING_PROJECT_ID = "projectID";
     public static final String EXTRA_STRING_PROGRESS_ID = "progressID";
