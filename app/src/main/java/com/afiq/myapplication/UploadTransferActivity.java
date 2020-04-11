@@ -14,9 +14,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.afiq.myapplication.databinding.ActivityUploadTransferBinding;
+import com.afiq.myapplication.models.ProgressModel;
+import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
+import com.afiq.myapplication.viewmodels.ProgressViewModel;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.karumi.dexter.Dexter;
@@ -25,15 +34,22 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 public class UploadTransferActivity extends AppCompatActivity {
+
+    private static final String TAG = "UploadTransferActivity";
 
     public static final int REQUEST_GALLERY_CODE = 10;
     public static final int REQUEST_CAMERA_CODE = 11;
 
     private String _progressID;
+    private ProgressModel data;
+    private Uri uri;
 
     private ActivityUploadTransferBinding binding;
+
+    private CatLoadingView loadingUpload;
 
 
     @Override
@@ -45,6 +61,8 @@ public class UploadTransferActivity extends AppCompatActivity {
         _progressID = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROGRESS_ID);
 
         setTitle("Upload Transfer");
+
+        bindViewModel();
     }
 
     @Override
@@ -55,9 +73,8 @@ public class UploadTransferActivity extends AppCompatActivity {
 
             // if data from gallery
             if (requestCode == REQUEST_GALLERY_CODE) {
-                binding.viewer.setImageURI(data.getData());
-
-                uploadImageUri(data.getData());
+                uri = data.getData();
+                binding.viewer.setImageURI(uri);
             }
 
             // if data from camera
@@ -77,6 +94,25 @@ public class UploadTransferActivity extends AppCompatActivity {
     }
 
     public void onClickSubmit(View view) {
+        uploadImage();
+    }
+
+    private void updateUI(ProgressModel data) {
+        if (data.getStatus() == ProgressModel.STATUS.SUCCESS)
+            binding.submit.setVisibility(View.GONE);
+        if (!data.getImage().isEmpty())
+            Glide.with(this).load(data.getImage()).into(binding.viewer);
+    }
+
+    private void bindViewModel() {
+        ProgressViewModel vm = new ViewModelProvider(this).get(ProgressViewModel.class);
+        vm.getData(Database.refProgress(_progressID)).observe(this, this::progressListener);
+    }
+
+    private void progressListener(ProgressModel data) {
+        this.data = data;
+
+        updateUI(data);
     }
 
     private void openDialog() {
@@ -133,13 +169,41 @@ public class UploadTransferActivity extends AppCompatActivity {
                 .check();
     }
 
-    private void uploadImageUri(Uri uri) {
-        StorageReference reference = FirebaseStorage.getInstance().getReference();
-        reference
-                .child("mobile/receipt")
-                .putFile(uri)
-                .addOnCompleteListener(task -> {
-                    Toast.makeText(this, "upload: " + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                });
+    private void uploadImage() {
+        loadingUpload = new CatLoadingView();
+        loadingUpload.setCancelable(false);
+        loadingUpload.show(getSupportFragmentManager(), TAG);
+
+        if (data != null && uri != null) {
+            String pathname = "mobile/receipt/" + data.getUserID() + "/" + _progressID;
+            StorageReference reference = FirebaseStorage.getInstance().getReference().child(pathname);
+
+            reference
+                    .putFile(uri)
+                    .continueWithTask(task -> reference.getDownloadUrl())
+                    .addOnCompleteListener(this::uriListener);
+        }
+    }
+
+    private void uriListener(Task<Uri> task) {
+        Uri downloadUri = task.getResult();
+
+        if (downloadUri != null) updateProgress(downloadUri.toString());
+    }
+
+    private void updateProgress(String img_url) {
+        FirebaseFirestore.getInstance().runTransaction(transaction -> {
+            DocumentReference progressRef = Database.refProgress(_progressID);
+
+            DocumentSnapshot snapshot = transaction.get(progressRef);
+            ProgressModel data = snapshot.toObject(ProgressModel.class);
+
+            if (data != null) {
+                data.setImage(img_url);
+                transaction.set(progressRef, data);
+            }
+
+            return null;
+        });
     }
 }

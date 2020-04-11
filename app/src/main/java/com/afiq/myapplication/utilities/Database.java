@@ -71,4 +71,9 @@ public class Database {
         return getFirestore()
                 .document(COLLECTION_PROJECT + "/" + project_id);
     }
+
+    public static DocumentReference refProgress(String progress_id) {
+        return getFirestore()
+                .document(COLLECTION_PROGRESS + "/" + progress_id);
+    }
 }
