@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivityUploadTransferBinding;
 import com.afiq.myapplication.utilities.Interaction;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -55,11 +57,12 @@ public class UploadTransferActivity extends AppCompatActivity {
             if (requestCode == REQUEST_GALLERY_CODE) {
                 binding.viewer.setImageURI(data.getData());
 
-                uploadImage(data.getData());
+                uploadImageUri(data.getData());
             }
 
             // if data from camera
             if (requestCode == REQUEST_CAMERA_CODE) {
+                Toast.makeText(this, "Camera functionality under review, refrain to use this function for uploading photo", Toast.LENGTH_SHORT).show();
 
                 if (data.getExtras() == null) return;
 
@@ -77,7 +80,7 @@ public class UploadTransferActivity extends AppCompatActivity {
     }
 
     private void openDialog() {
-        String[] items = {"Gallery", "Camera"};
+        String[] items = {"Gallery", "Camera(disable)"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select image from");
@@ -130,7 +133,13 @@ public class UploadTransferActivity extends AppCompatActivity {
                 .check();
     }
 
-    private void uploadImage(Uri uri) {
-
+    private void uploadImageUri(Uri uri) {
+        StorageReference reference = FirebaseStorage.getInstance().getReference();
+        reference
+                .child("mobile/receipt")
+                .putFile(uri)
+                .addOnCompleteListener(task -> {
+                    Toast.makeText(this, "upload: " + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                });
     }
 }

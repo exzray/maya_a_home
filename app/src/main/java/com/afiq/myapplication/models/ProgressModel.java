@@ -18,6 +18,7 @@ public class ProgressModel {
     private String projectID = "";
     private String description = "";
     private String reference = "";
+    private String image = "";
     private String note = "";
     private String reason = "";
 
@@ -87,6 +88,14 @@ public class ProgressModel {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getNote() {
