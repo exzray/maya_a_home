@@ -5,16 +5,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.databinding.FragmentAdminProjectBinding;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.recycler_adapters.AdminProjectAdapter;
+import com.afiq.myapplication.utilities.Database;
+import com.afiq.myapplication.viewmodels.ProjectListViewModel;
+
+import java.util.List;
 
 
 public class AdminProjectFragment extends Fragment {
@@ -22,6 +28,8 @@ public class AdminProjectFragment extends Fragment {
     private static final String TAG = "AdminProjectFragment";
 
     private FragmentAdminProjectBinding binding;
+
+    private AdminProjectAdapter adapter;
 
 
     public AdminProjectFragment() {
@@ -44,12 +52,21 @@ public class AdminProjectFragment extends Fragment {
             return;
         }
 
-        binding.recycler.setAdapter(new AdminProjectAdapter(this::onClickProject));
+        adapter = new AdminProjectAdapter(this::onClickProject);
+
+        binding.recycler.setAdapter(adapter);
         binding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+        ProjectListViewModel vm = new ViewModelProvider(this).get(ProjectListViewModel.class);
+        vm.getData(Database.queryAgentProjectList()).observe(getViewLifecycleOwner(), this::listener);
     }
 
     private void onClickProject(ProjectModel data) {
+        Toast.makeText(getContext(), data.getLabel(), Toast.LENGTH_SHORT).show();
+    }
 
+    private void listener(List<ProjectModel> list) {
+        adapter.update(list);
     }
 }

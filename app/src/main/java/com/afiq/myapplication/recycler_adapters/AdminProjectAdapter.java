@@ -4,8 +4,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afiq.myapplication.R;
 import com.afiq.myapplication.databinding.ItemAdminProjectBinding;
 import com.afiq.myapplication.models.ProjectModel;
 
@@ -33,12 +35,12 @@ public class AdminProjectAdapter extends RecyclerView.Adapter<AdminProjectAdapte
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
-//        holder.update(PROJECTS.get(position));
+        holder.update(PROJECTS.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return PROJECTS.size();
     }
 
     public void update(List<ProjectModel> list) {
@@ -59,6 +61,20 @@ public class AdminProjectAdapter extends RecyclerView.Adapter<AdminProjectAdapte
         }
 
         private void update(ProjectModel data) {
+            boolean status_state = data.getTotalCost().equals(data.getTotalPay());
+
+            String label = data.getLabel();
+            String revenue = "Revenue: RM" + data.getTotalCost();
+            String status = status_state ? "complete" : "pending";
+
+            int status_color = status_state ? R.color.green_500 : R.color.orange_500;
+
+
+            binding.label.setText(label);
+            binding.revenue.setText(revenue);
+            binding.status.setText(status);
+            binding.status.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), status_color));
+
             binding.getRoot().setOnClickListener(v -> actionItem.onClick(data));
         }
     }
