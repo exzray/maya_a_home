@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.afiq.myapplication.adapters.AdminMainAdapter;
+import com.afiq.myapplication.fragment_adapter.AdminMainAdapter;
 import com.afiq.myapplication.databinding.ActivityMainAdminBinding;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 

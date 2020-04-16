@@ -15,7 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.afiq.myapplication.adapters.ProjectAdapter;
+import com.afiq.myapplication.recycler_adapter.ProjectAdapter;
 import com.afiq.myapplication.databinding.ActivityMainBinding;
 import com.afiq.myapplication.databinding.DialogQrCodeBinding;
 import com.afiq.myapplication.models.ProjectModel;
