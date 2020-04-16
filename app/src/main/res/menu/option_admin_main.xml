@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_dashboard"
+        android:icon="@drawable/ic_dashboard"
+        android:title="@string/title_dashboard" />
+
+    <item
+        android:id="@+id/action_payment"
+        android:icon="@drawable/ic_payment"
+        android:title="@string/title_payment" />
+
+    <item
+        android:id="@+id/action_enquire"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/title_enquire" />
+</menu>
