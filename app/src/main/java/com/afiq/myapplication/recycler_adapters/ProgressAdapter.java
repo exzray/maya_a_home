@@ -1,4 +1,4 @@
-package com.afiq.myapplication.recycler_adapter;
+package com.afiq.myapplication.recycler_adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

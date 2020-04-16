@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.afiq.myapplication.fragment_adapter.AdminMainAdapter;
+import com.afiq.myapplication.fragment_adapters.AdminMainAdapter;
 import com.afiq.myapplication.databinding.ActivityMainAdminBinding;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
@@ -25,7 +25,7 @@ public class MainAdminActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.option_admin_main);
+        AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.option_admin_navigation);
         navigationAdapter.setupWithBottomNavigation(binding.navigation);
 
         binding.pager.setAdapter(new AdminMainAdapter(getSupportFragmentManager()));

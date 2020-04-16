@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.afiq.myapplication.recycler_adapter.ProgressAdapter;
+import com.afiq.myapplication.recycler_adapters.ProgressAdapter;
 import com.afiq.myapplication.databinding.ActivityProjectBinding;
 import com.afiq.myapplication.models.ProgressModel;
 import com.afiq.myapplication.models.ProjectModel;

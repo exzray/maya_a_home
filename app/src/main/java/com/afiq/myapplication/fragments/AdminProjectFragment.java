@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.databinding.FragmentAdminProjectBinding;
+import com.afiq.myapplication.models.ProjectModel;
+import com.afiq.myapplication.recycler_adapters.AdminProjectAdapter;
 
 
 public class AdminProjectFragment extends Fragment {
@@ -42,7 +44,12 @@ public class AdminProjectFragment extends Fragment {
             return;
         }
 
+        binding.recycler.setAdapter(new AdminProjectAdapter(this::onClickProject));
         binding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    }
+
+    private void onClickProject(ProjectModel data) {
+
     }
 }

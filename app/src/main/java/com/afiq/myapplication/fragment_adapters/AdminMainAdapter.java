@@ -1,4 +1,4 @@
-package com.afiq.myapplication.fragment_adapter;
+package com.afiq.myapplication.fragment_adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
