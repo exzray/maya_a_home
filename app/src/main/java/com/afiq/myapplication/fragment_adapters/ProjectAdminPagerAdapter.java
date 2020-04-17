@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.afiq.myapplication.fragments.ProjectEditFragment;
+import com.afiq.myapplication.fragments.ProjectPaymentFragment;
+import com.afiq.myapplication.fragments.ProjectProgressFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +17,15 @@ public class ProjectAdminPagerAdapter extends FragmentStatePagerAdapter {
     private static final List<Fragment> FRAGMENTS = new ArrayList<>();
 
 
-    public ProjectAdminPagerAdapter(@NonNull FragmentManager fm) {
+    public ProjectAdminPagerAdapter(@NonNull FragmentManager fm, String project_id) {
         super(fm);
+        ProjectEditFragment edit = new ProjectEditFragment();
+        ProjectProgressFragment progress = new ProjectProgressFragment();
+        ProjectPaymentFragment payment = new ProjectPaymentFragment();
+
+        FRAGMENTS.add(edit);
+        FRAGMENTS.add(progress);
+        FRAGMENTS.add(payment);
     }
 
     @NonNull
