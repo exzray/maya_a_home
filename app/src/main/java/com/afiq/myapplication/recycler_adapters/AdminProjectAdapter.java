@@ -65,17 +65,22 @@ public class AdminProjectAdapter extends RecyclerView.Adapter<AdminProjectAdapte
 
             String label = data.getLabel();
             String revenue = "Revenue: RM" + data.getTotalCost();
-            String status = status_state ? "complete" : "pending";
-
-            int status_color = status_state ? R.color.green_500 : R.color.orange_500;
-
 
             binding.label.setText(label);
             binding.revenue.setText(revenue);
-            binding.status.setText(status);
-            binding.status.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), status_color));
+            binding.status.setText(getStatusText(status_state));
+            binding.status.setTextColor(getStatusColor(status_state));
 
             binding.getRoot().setOnClickListener(v -> actionItem.onClick(data));
+        }
+
+        private String getStatusText(boolean state) {
+            return state ? "complete" : "pending";
+        }
+
+        private int getStatusColor(boolean state) {
+            int status_color = state ? R.color.green_500 : R.color.orange_500;
+            return ContextCompat.getColor(binding.getRoot().getContext(), status_color);
         }
     }
 
