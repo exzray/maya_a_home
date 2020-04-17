@@ -1,11 +1,11 @@
 package com.afiq.myapplication.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,10 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.afiq.myapplication.ProjectAdminActivity;
 import com.afiq.myapplication.databinding.FragmentAdminProjectBinding;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.recycler_adapters.AdminProjectAdapter;
 import com.afiq.myapplication.utilities.Database;
+import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProjectListViewModel;
 
 import java.util.List;
@@ -51,7 +53,6 @@ public class AdminProjectFragment extends Fragment {
             Log.i(TAG, "context: null");
             return;
         }
-
         adapter = new AdminProjectAdapter(this::onClickProject);
 
         binding.recycler.setAdapter(adapter);
@@ -63,7 +64,10 @@ public class AdminProjectFragment extends Fragment {
     }
 
     private void onClickProject(ProjectModel data) {
-        Toast.makeText(getContext(), data.getLabel(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), ProjectAdminActivity.class);
+        intent.putExtra(Interaction.EXTRA_STRING_PROJECT_ID, data.getSnapshot().getId());
+
+        startActivity(intent);
     }
 
     private void listener(List<ProjectModel> list) {

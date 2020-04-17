@@ -47,11 +47,10 @@ public class ProjectListViewModel extends ViewModel {
             List<ProjectModel> list = new ArrayList<>();
 
             for (DocumentSnapshot snapshot : snapshots) {
-                ProjectModel data = snapshot.toObject(ProjectModel.class);
+                ProjectModel data = ProjectModel.createInstance(snapshot);
 
                 if (data != null) list.add(data);
             }
-
             data.setValue(list);
         }
     }

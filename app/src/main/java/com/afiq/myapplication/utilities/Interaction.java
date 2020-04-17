@@ -15,9 +15,7 @@ public class Interaction {
     public static final String EXTRA_STRING_AGENT_ID = "agentID";
     public static final String EXTRA_STRING_PROJECT_ID = "projectID";
     public static final String EXTRA_STRING_PROGRESS_ID = "progressID";
-
     public static final String EXTRA_INT_NOTIFICATION_ID = "id";
-
     public static final String EXTRA_BOOLEAN_PROFILE_EXIST = "profileExist";
 
 
