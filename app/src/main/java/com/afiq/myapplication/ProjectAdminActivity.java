@@ -53,7 +53,10 @@ public class ProjectAdminActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(String project_id) {
-        binding.pager.setAdapter(new ProjectAdminPagerAdapter(getSupportFragmentManager(), project_id));
+        ProjectAdminPagerAdapter adapter = new ProjectAdminPagerAdapter(getSupportFragmentManager(), project_id);
+
+        binding.pager.setAdapter(adapter);
+        binding.tab.setupWithViewPager(binding.pager);
     }
 
     private void listener(ProjectModel data) {
