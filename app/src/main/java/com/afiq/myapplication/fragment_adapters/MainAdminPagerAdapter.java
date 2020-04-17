@@ -12,12 +12,12 @@ import com.afiq.myapplication.fragments.AdminProjectFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminMainAdapter extends FragmentStatePagerAdapter {
+public class MainAdminPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final List<Fragment> FRAGMENTS = new ArrayList<>();
 
 
-    public AdminMainAdapter(@NonNull FragmentManager fm) {
+    public MainAdminPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
 
         AdminProjectFragment fragment1 = new AdminProjectFragment();
