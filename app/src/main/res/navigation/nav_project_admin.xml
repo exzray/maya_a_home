@@ -2,4 +2,45 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_project" />
+    android:id="@+id/nav_project"
+    app:startDestination="@id/project_admin_detail">
+    <fragment
+        android:id="@+id/project_admin_detail"
+        android:name="com.afiq.myapplication.fragments.ProjectAdminDetailFragment"
+        tools:layout="@layout/fragment_project_admin_detail">
+        <action
+            android:id="@+id/action_project_admin_detail_to_placeholder52"
+            app:destination="@id/payment_admin_edit" />
+        <action
+            android:id="@+id/action_project_admin_detail_to_project_admin_edit2"
+            app:destination="@id/project_admin_edit" />
+        <action
+            android:id="@+id/action_project_admin_detail_to_progress_admin_edit2"
+            app:destination="@id/progress_admin_edit" />
+    </fragment>
+    <fragment
+        android:id="@+id/project_admin_edit"
+        android:name="com.afiq.myapplication.fragments.ProjectAdminEditFragment"
+        tools:layout="@layout/fragment_project_admin_edit">
+        <argument
+            android:name="project_id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/progress_admin_edit"
+        android:name="com.afiq.myapplication.fragments.ProgressAdminEditFragment"
+        tools:layout="@layout/fragment_progress_admin_edit">
+        <argument
+            android:name="progress_id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/payment_admin_edit"
+        android:name="com.afiq.myapplication.fragments.PaymentAdminEditFragment"
+        tools:layout="@layout/fragment_payment_admin_edit">
+        <argument
+            android:name="payment_id"
+            app:argType="string" />
+    </fragment>
+</navigation>
