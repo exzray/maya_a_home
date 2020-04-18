@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.afiq.myapplication.ProjectAdminNavigationActivity;
 import com.afiq.myapplication.databinding.FragmentAdminProjectBinding;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.recycler_adapters.AdminProjectAdapter;
@@ -63,7 +64,7 @@ public class AdminProjectFragment extends Fragment {
     }
 
     private void onClickProject(ProjectModel data) {
-        Intent intent = new Intent(getContext(), ProjectAdminActivity.class);
+        Intent intent = new Intent(getContext(), ProjectAdminNavigationActivity.class);
         intent.putExtra(Interaction.EXTRA_STRING_PROJECT_ID, data.getSnapshot().getId());
 
         startActivity(intent);
