@@ -21,7 +21,7 @@
                 android:padding="10dp"
                 android:text="Customer Detail"
                 android:textAllCaps="true"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                         android:fontFamily="@font/lato"
                         android:text="Mohd Nazirul Aiman"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -69,7 +69,7 @@
                         android:fontFamily="@font/lato"
                         android:text="pythorevolution@gmail.com"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -90,7 +90,7 @@
                         android:fontFamily="@font/lato"
                         android:text="+60123456789"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -111,7 +111,7 @@
                         android:fontFamily="@font/lato"
                         android:text="Lot 24h, Kg Sri Aman Hilir, Jalan Jurutera, 47150 Puchong, Selangor."
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -122,7 +122,7 @@
                 android:padding="10dp"
                 android:text="project detail"
                 android:textAllCaps="true"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                         android:fontFamily="@font/lato"
                         android:text="Rumah Pertama Ku"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -170,7 +170,7 @@
                         android:fontFamily="@font/lato"
                         android:text="12/12/20"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -191,7 +191,7 @@
                         android:fontFamily="@font/lato"
                         android:text="RM200000"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -212,7 +212,7 @@
                         android:fontFamily="@font/lato"
                         android:text="RM150000"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -233,7 +233,7 @@
                         android:fontFamily="@font/lato"
                         android:text="RM50000"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -254,7 +254,7 @@
                         android:fontFamily="@font/lato"
                         android:text="in-progress"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
