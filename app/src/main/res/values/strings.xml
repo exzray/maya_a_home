@@ -25,4 +25,6 @@
     <string name="text_my_projects">My Projects</string>
     <string name="text_project_information">Project Information</string>
     <string name="button_create">create</string>
+    <string name="text_customer_name">customer name</string>
+    <string name="text_customer_email">customer email</string>
 </resources>

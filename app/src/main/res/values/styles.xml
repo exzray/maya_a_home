@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.subText" parent="AppTheme">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">.05</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="fontFamily">@font/lato</item>
+    </style>
+
 </resources>

@@ -59,6 +59,10 @@
             android:name=".UploadTransferActivity"
             android:parentActivityName=".ProjectActivity" />
         <activity android:name=".MainAdminActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
