@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.afiq.myapplication.ProjectAdminActivity;
 import com.afiq.myapplication.databinding.FragmentAdminProjectBinding;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.recycler_adapters.AdminProjectAdapter;
