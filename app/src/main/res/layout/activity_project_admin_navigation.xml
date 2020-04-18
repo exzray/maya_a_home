@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ProjectAdminNavigationActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment"
+        android:name="com.afiq.myapplication.fragments.ProjectAdminDetailFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_project_admin" />
 </androidx.constraintlayout.widget.ConstraintLayout>
