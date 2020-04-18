@@ -27,4 +27,8 @@
     <string name="button_create">create</string>
     <string name="text_customer_name">customer name</string>
     <string name="text_customer_email">customer email</string>
+    <string name="text_edit">edit</string>
+    <string name="text_project_detail">Project Detail</string>
+    <string name="text_customer_detail">Customer Detail</string>
+    <string name="text_assign">assign</string>
 </resources>

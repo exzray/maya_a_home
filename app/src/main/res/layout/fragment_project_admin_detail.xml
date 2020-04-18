@@ -14,14 +14,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:padding="10dp"
-                android:text="Customer Detail"
-                android:textAllCaps="true"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/customer_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/text_customer_detail"
+                    android:textAllCaps="true"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/customer_detail"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/text_assign"
+                    android:textAllCaps="true"
+                    android:textColor="?attr/colorPrimary" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,14 +131,30 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:padding="10dp"
-                android:text="project detail"
-                android:textAllCaps="true"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/project_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/text_project_detail"
+                    android:textAllCaps="true"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/project_detail"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/text_edit"
+                    android:textAllCaps="true"
+                    android:textColor="?attr/colorPrimary" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
