@@ -17,11 +17,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Customer Detail"
-                android:textAllCaps="true"
                 android:fontFamily="@font/open_sans"
                 android:padding="10dp"
-                android:textSize="20sp"/>
+                android:text="Customer Detail"
+                android:textAllCaps="true"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,10 +35,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
+
                     <TextView
+                        style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/AppTheme.subText"
                         android:text="name" />
 
                     <TextView
@@ -55,10 +56,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
+
                     <TextView
+                        style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/AppTheme.subText"
                         android:text="email" />
 
                     <TextView
@@ -75,10 +77,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
+
                     <TextView
+                        style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/AppTheme.subText"
                         android:text="contact" />
 
                     <TextView
@@ -95,10 +98,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
+
                     <TextView
+                        style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/AppTheme.subText"
                         android:text="address" />
 
                     <TextView
@@ -114,11 +118,145 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="project detail"
-                android:textAllCaps="true"
                 android:fontFamily="@font/open_sans"
                 android:padding="10dp"
-                android:textSize="20sp"/>
+                android:text="project detail"
+                android:textAllCaps="true"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/AppTheme.subText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="name" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="Rumah Pertama Ku"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/AppTheme.subText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="started" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="12/12/20"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/AppTheme.subText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="revenue" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="RM200000"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/AppTheme.subText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="settlement" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="RM150000"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/AppTheme.subText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="balance" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="RM50000"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/AppTheme.subText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="status" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:text="in-progress"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>
