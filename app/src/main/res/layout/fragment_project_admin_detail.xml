@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:text="Customer Detail"
                 android:textAllCaps="true"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/open_sans"
                 android:padding="10dp"
                 android:textSize="20sp"/>
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:text="project detail"
                 android:textAllCaps="true"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/open_sans"
                 android:padding="10dp"
                 android:textSize="20sp"/>
         </LinearLayout>
