@@ -15,7 +15,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/customer_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
@@ -44,6 +43,7 @@
                         android:text="@string/text_name" />
 
                     <TextView
+                        android:id="@+id/user_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -65,6 +65,7 @@
                         android:text="@string/text_email" />
 
                     <TextView
+                        android:id="@+id/user_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -86,6 +87,7 @@
                         android:text="@string/text_contact" />
 
                     <TextView
+                        android:id="@+id/user_contact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -107,6 +109,7 @@
                         android:text="@string/text_address" />
 
                     <TextView
+                        android:id="@+id/user_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -117,7 +120,6 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/project_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
@@ -146,6 +148,7 @@
                         android:text="@string/text_name" />
 
                     <TextView
+                        android:id="@+id/project_agent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -167,6 +170,7 @@
                         android:text="@string/text_started" />
 
                     <TextView
+                        android:id="@+id/project_start"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -188,6 +192,7 @@
                         android:text="@string/text_revenue" />
 
                     <TextView
+                        android:id="@+id/project_revenue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -209,6 +214,7 @@
                         android:text="@string/text_settlement" />
 
                     <TextView
+                        android:id="@+id/project_settlement"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -230,6 +236,7 @@
                         android:text="@string/text_balance" />
 
                     <TextView
+                        android:id="@+id/project_balance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
@@ -251,6 +258,7 @@
                         android:text="@string/text_status" />
 
                     <TextView
+                        android:id="@+id/project_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
