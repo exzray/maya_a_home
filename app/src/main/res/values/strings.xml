@@ -42,4 +42,5 @@
     <string name="text_settlement">settlement</string>
     <string name="text_balance">balance</string>
     <string name="text_status">status</string>
+    <string name="text_revenue">revenue</string>
 </resources>
