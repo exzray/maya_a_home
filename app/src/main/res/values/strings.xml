@@ -34,4 +34,12 @@
     <string name="text_view_feedback">View Feedback</string>
     <string name="text_change_user">Change User</string>
     <string name="text_edit_project_detail">Edit Project Detail</string>
+    <string name="text_name">name</string>
+    <string name="text_email">email</string>
+    <string name="text_contact">contact</string>
+    <string name="text_address">address</string>
+    <string name="text_started">started</string>
+    <string name="text_settlement">settlement</string>
+    <string name="text_balance">balance</string>
+    <string name="text_status">status</string>
 </resources>

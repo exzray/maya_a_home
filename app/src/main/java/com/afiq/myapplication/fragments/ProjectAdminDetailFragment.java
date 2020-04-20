@@ -27,7 +27,4 @@ public class ProjectAdminDetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_project_admin_detail, container, false);
     }
 
-    public void onClickAssignUser(View view){
-
-    }
 }

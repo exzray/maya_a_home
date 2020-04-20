@@ -17,9 +17,9 @@
             <TextView
                 android:id="@+id/customer_detail"
                 android:layout_width="match_parent"
-                android:padding="10dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
+                android:padding="10dp"
                 android:text="@string/text_customer_detail"
                 android:textAllCaps="true"
                 android:textSize="18sp" />
@@ -41,13 +41,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="name" />
+                        android:text="@string/text_name" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="Mohd Nazirul Aiman"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -62,13 +62,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="email" />
+                        android:text="@string/text_email" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="pythorevolution@gmail.com"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -83,13 +83,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="contact" />
+                        android:text="@string/text_contact" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="+60123456789"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -104,13 +104,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="address" />
+                        android:text="@string/text_address" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="Lot 24h, Kg Sri Aman Hilir, Jalan Jurutera, 47150 Puchong, Selangor."
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -120,8 +120,8 @@
                 android:id="@+id/project_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:fontFamily="@font/open_sans"
+                android:padding="10dp"
                 android:text="@string/text_project_detail"
                 android:textAllCaps="true"
                 android:textSize="18sp" />
@@ -143,13 +143,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="name" />
+                        android:text="@string/text_name" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="Rumah Pertama Ku"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -164,13 +164,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="started" />
+                        android:text="@string/text_started" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="12/12/20"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -206,13 +206,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="settlement" />
+                        android:text="@string/text_settlement" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="RM150000"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -227,13 +227,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="balance" />
+                        android:text="@string/text_balance" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="RM50000"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -248,13 +248,13 @@
                         style="@style/AppTheme.subText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="status" />
+                        android:text="@string/text_status" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
-                        android:text="in-progress"
+                        android:text="@string/app_name"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
