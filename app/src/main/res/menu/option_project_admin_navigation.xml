@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_view_progress"
+        android:icon="@drawable/ic_assignment"
+        android:title="@string/app_name"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_change_user"
+        android:title="@string/text_change_user" />
+
+    <item
+        android:id="@+id/action_edit_project"
+        android:title="@string/text_edit_project_detail" />
+
+    <item
+        android:id="@+id/action_view_feedback"
+        android:title="@string/text_view_feedback" />
+</menu>

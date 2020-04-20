@@ -31,4 +31,7 @@
     <string name="text_project_detail">Project Detail</string>
     <string name="text_customer_detail">Customer Detail</string>
     <string name="text_assign">assign</string>
+    <string name="text_view_feedback">View Feedback</string>
+    <string name="text_change_user">Change User</string>
+    <string name="text_edit_project_detail">Edit Project Detail</string>
 </resources>

@@ -25,7 +25,7 @@ public class MainAdminActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.option_admin_navigation);
+        AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.option_admin_bottom_navigation);
         navigationAdapter.setupWithBottomNavigation(binding.navigation);
 
         binding.pager.setAdapter(new MainAdminPagerAdapter(getSupportFragmentManager()));
