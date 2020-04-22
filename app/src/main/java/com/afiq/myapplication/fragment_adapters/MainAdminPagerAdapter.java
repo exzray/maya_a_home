@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.afiq.myapplication.fragments.AdminAgentFragment;
 import com.afiq.myapplication.fragments.AdminEnquireFragment;
 import com.afiq.myapplication.fragments.AdminPaymentFragment;
 import com.afiq.myapplication.fragments.AdminProjectFragment;
@@ -22,11 +23,13 @@ public class MainAdminPagerAdapter extends FragmentStatePagerAdapter {
 
         AdminProjectFragment fragment1 = new AdminProjectFragment();
         AdminPaymentFragment fragment2 = new AdminPaymentFragment();
-        AdminEnquireFragment fragment3 = new AdminEnquireFragment();
+        AdminAgentFragment fragment3 = new AdminAgentFragment();
+        AdminEnquireFragment fragment4 = new AdminEnquireFragment();
 
         FRAGMENTS.add(fragment1);
         FRAGMENTS.add(fragment2);
         FRAGMENTS.add(fragment3);
+        FRAGMENTS.add(fragment4);
     }
 
     @NonNull

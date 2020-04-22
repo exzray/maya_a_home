@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import com.afiq.myapplication.databinding.ActivityMainAdminBinding;
 import com.afiq.myapplication.fragment_adapters.MainAdminPagerAdapter;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
 public class MainAdminActivity extends AppCompatActivity {
@@ -31,6 +32,8 @@ public class MainAdminActivity extends AppCompatActivity {
         binding.pager.setAdapter(new MainAdminPagerAdapter(getSupportFragmentManager()));
         binding.navigation.setAccentColor(ContextCompat.getColor(this, R.color.colorPrimary));
         binding.navigation.setOnTabSelectedListener(this::tabSelectedListener);
+
+        binding.navigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
     }
 
     private boolean tabSelectedListener(int position, boolean wasSelected) {

@@ -11,6 +11,11 @@
         android:title="@string/title_payment" />
 
     <item
+        android:id="@+id/action_agent"
+        android:icon="@drawable/ic_agent"
+        android:title="@string/text_agent" />
+
+    <item
         android:id="@+id/action_enquire"
         android:icon="@drawable/ic_chat"
         android:title="@string/title_enquire" />
