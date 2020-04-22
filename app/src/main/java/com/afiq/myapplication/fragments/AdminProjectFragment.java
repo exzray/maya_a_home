@@ -65,6 +65,7 @@ public class AdminProjectFragment extends Fragment {
 
     private void onClickProject(ProjectModel data) {
         Intent intent = new Intent(getContext(), ProjectAdminNavigationActivity.class);
+        intent.putExtra(Interaction.EXTRA_STRING_USER_ID, data.getUserID());
         intent.putExtra(Interaction.EXTRA_STRING_PROJECT_ID, data.getSnapshot().getId());
 
         startActivity(intent);

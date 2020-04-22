@@ -17,6 +17,12 @@
         <action
             android:id="@+id/action_project_admin_detail_to_progress_admin_edit2"
             app:destination="@id/progress_admin_edit" />
+        <argument
+            android:name="project_id"
+            app:argType="string" />
+        <argument
+            android:name="user_id"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/project_admin_edit"
