@@ -62,6 +62,11 @@ public class Database {
 
 
     // document
+    public static DocumentReference refProfile(String uid) {
+        return getFirestore()
+                .document(COLLECTION_USER + "/" + uid);
+    }
+
     public static DocumentReference refProfile() {
         return getFirestore()
                 .document(COLLECTION_USER + "/" + getUser().getUid());
