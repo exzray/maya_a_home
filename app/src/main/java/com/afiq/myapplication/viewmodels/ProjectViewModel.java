@@ -1,5 +1,7 @@
 package com.afiq.myapplication.viewmodels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,6 +14,8 @@ import com.google.firebase.firestore.ListenerRegistration;
 
 public class ProjectViewModel extends ViewModel {
 
+    private static final String TAG = "ProjectViewModel";
+
     private MutableLiveData<ProjectModel> data;
     private ListenerRegistration listener;
 
@@ -19,26 +23,28 @@ public class ProjectViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        stopListener();
+        stop();
     }
 
-    public LiveData<ProjectModel> getData(DocumentReference reference) {
+    public LiveData<ProjectModel> getData() {
         if (data == null) data = new MutableLiveData<>();
-        startListener(reference);
         return data;
     }
 
-    private void startListener(DocumentReference reference) {
-        stopListener();
+    public void start(DocumentReference reference) {
+        stop();
         listener = reference.addSnapshotListener(this::listener);
     }
 
-    private void stopListener() {
+    private void stop() {
         if (listener != null) listener.remove();
     }
 
-    private void listener(DocumentSnapshot snapshot, FirebaseFirestoreException e){
-        if (snapshot == null) data.setValue(null);
-        else data.setValue(ProjectModel.createInstance(snapshot));
+    private void listener(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
+        if (snapshot == null) {
+            Log.i(TAG, "snapshot: null");
+            return;
+        }
+        data.setValue(ProjectModel.createInstance(snapshot));
     }
 }

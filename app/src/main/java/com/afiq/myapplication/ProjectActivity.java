@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.afiq.myapplication.recycler_adapters.ProgressAdapter;
 import com.afiq.myapplication.databinding.ActivityProjectBinding;
 import com.afiq.myapplication.models.ProgressModel;
 import com.afiq.myapplication.models.ProjectModel;
+import com.afiq.myapplication.recycler_adapters.ProgressAdapter;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProgressListViewModel;
@@ -79,10 +79,9 @@ public class ProjectActivity extends AppCompatActivity {
     private void setupProjectViewModel() {
         if (_projectID == null) return;
 
-        ProjectViewModel vm = new ViewModelProvider(this).get(ProjectViewModel.class);
-        vm
-                .getData(Database.refProject(_projectID))
-                .observe(this, this::updateUI);
+        ProjectViewModel project_vm = new ViewModelProvider(this).get(ProjectViewModel.class);
+        project_vm.start(Database.refProject(_projectID));
+        project_vm.getData().observe(this, this::listener);
     }
 
     private void setupProgressListViewModel(String project_id) {
@@ -92,7 +91,7 @@ public class ProjectActivity extends AppCompatActivity {
         vm.getData(query).observe(this, list -> progressAdapter.update(list));
     }
 
-    private void updateUI(ProjectModel project) {
+    private void listener(ProjectModel project) {
         setTitle(project.getLabel());
 
         String payment_str = "RM " + project.getTotalCost();

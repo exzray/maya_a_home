@@ -25,7 +25,7 @@ public class ProfileViewModel extends ViewModel {
         return data;
     }
 
-    public void listen(DocumentReference reference) {
+    public void start(DocumentReference reference) {
         stop();
         registration = reference.addSnapshotListener(this::listener);
     }
