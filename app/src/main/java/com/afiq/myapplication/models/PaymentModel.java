@@ -3,6 +3,8 @@ package com.afiq.myapplication.models;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 
+import java.util.Date;
+
 public class PaymentModel {
 
     private DocumentSnapshot snapshot;
@@ -18,6 +20,8 @@ public class PaymentModel {
     private Integer transfer = 0;
 
     private Boolean accepted = false;
+
+    private Date created = new Date();
 
 
     public static PaymentModel createInstance(DocumentSnapshot snapshot) {

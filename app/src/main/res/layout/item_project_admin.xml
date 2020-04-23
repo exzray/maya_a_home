@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="6dp"
+        android:text="Bantuan Rumah Pertama Ku"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/revenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label"
+        android:layout_alignParentStart="true"
+        android:text="Revenue: RM200000" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="6dp"
+        android:text="complete" />
+</RelativeLayout>
