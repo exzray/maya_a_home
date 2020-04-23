@@ -14,14 +14,14 @@ import com.afiq.myapplication.models.ProjectModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminProjectAdapter extends RecyclerView.Adapter<AdminProjectAdapter.VH> {
+public class ProjectAdminAdapter extends RecyclerView.Adapter<ProjectAdminAdapter.VH> {
 
     private static final List<ProjectModel> PROJECTS = new ArrayList<>();
 
     private AdminProjectActionItem actionItem;
 
 
-    public AdminProjectAdapter(AdminProjectActionItem actionItem) {
+    public ProjectAdminAdapter(AdminProjectActionItem actionItem) {
         this.actionItem = actionItem;
     }
 

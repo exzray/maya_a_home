@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.afiq.myapplication.ProjectAdminNavigationActivity;
 import com.afiq.myapplication.databinding.FragmentAdminProjectBinding;
 import com.afiq.myapplication.models.ProjectModel;
-import com.afiq.myapplication.recycler_adapters.AdminProjectAdapter;
+import com.afiq.myapplication.recycler_adapters.ProjectAdminAdapter;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProjectListViewModel;
@@ -31,7 +31,7 @@ public class AdminProjectFragment extends Fragment {
 
     private FragmentAdminProjectBinding binding;
 
-    private AdminProjectAdapter adapter;
+    private ProjectAdminAdapter adapter;
 
 
     public AdminProjectFragment() {
@@ -53,7 +53,7 @@ public class AdminProjectFragment extends Fragment {
             Log.i(TAG, "context: null");
             return;
         }
-        adapter = new AdminProjectAdapter(this::onClickProject);
+        adapter = new ProjectAdminAdapter(this::onClickProject);
 
         binding.recycler.setAdapter(adapter);
         binding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
