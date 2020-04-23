@@ -17,8 +17,10 @@ import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -69,7 +71,7 @@ public class UserService extends Service {
         if (profile == null) profile = new MutableLiveData<>();
         if (listenerProfile == null) {
             listenerProfile = Database
-                    .refProfile()
+                    .DOC_PROFILE(Database.getUser().getUid())
                     .addSnapshotListener((snapshot, e) -> {
                         if (snapshot == null) return;
 
@@ -96,25 +98,27 @@ public class UserService extends Service {
         if (listenerProjects == null) {
             listenerProjects = Database
                     .queryUserProjectList()
-                    .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                        if (queryDocumentSnapshots == null) return;
-
-                        List<ProjectModel> list = new ArrayList<>();
-
-                        for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments())
-                            list.add(ProjectModel.createInstance(snapshot));
-
-                        for (DocumentChange change : queryDocumentSnapshots.getDocumentChanges()) {
-                            ProjectModel data = change.getDocument().toObject(ProjectModel.class);
-
-                            if (change.getType() == DocumentChange.Type.MODIFIED)
-
-                                broadcastNotification("Project Notification", data.getLabel());
-                        }
-
-                        if (projects != null) projects.setValue(list);
-                    });
+                    .addSnapshotListener(this::listenerProjects);
         }
+    }
+
+    private void listenerProjects(QuerySnapshot snapshots, FirebaseFirestoreException e) {
+        if (snapshots == null) return;
+
+        List<ProjectModel> list = new ArrayList<>();
+
+        for (DocumentSnapshot snapshot : snapshots.getDocuments())
+            list.add(ProjectModel.createInstance(snapshot));
+
+        for (DocumentChange change : snapshots.getDocumentChanges()) {
+            ProjectModel data = change.getDocument().toObject(ProjectModel.class);
+
+            if (change.getType() == DocumentChange.Type.MODIFIED)
+
+                broadcastNotification("Project Notification", data.getLabel());
+        }
+
+        if (projects != null) projects.setValue(list);
     }
 
     private void stopProjects() {

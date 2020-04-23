@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,15 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.afiq.myapplication.databinding.ActivityUploadTransferBinding;
-import com.afiq.myapplication.models.ProgressModel;
+import com.afiq.myapplication.models.PaymentModel;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
-import com.afiq.myapplication.viewmodels.ProgressViewModel;
+import com.afiq.myapplication.viewmodels.PaymentViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.karumi.dexter.Dexter;
@@ -43,8 +42,11 @@ public class UploadTransferActivity extends AppCompatActivity {
     public static final int REQUEST_GALLERY_CODE = 10;
     public static final int REQUEST_CAMERA_CODE = 11;
 
-    private String _progressID;
-    private ProgressModel data;
+    private String user_id;
+    private String agent_id;
+    private String project_id;
+    private String progress_id;
+    private PaymentModel data;
     private Uri uri;
 
     private ActivityUploadTransferBinding binding;
@@ -58,11 +60,14 @@ public class UploadTransferActivity extends AppCompatActivity {
         binding = ActivityUploadTransferBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        _progressID = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROGRESS_ID);
+        user_id = getIntent().getStringExtra(Interaction.EXTRA_STRING_USER_ID);
+        agent_id = getIntent().getStringExtra(Interaction.EXTRA_STRING_AGENT_ID);
+        project_id = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROJECT_ID);
+        progress_id = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROGRESS_ID);
 
         setTitle("Upload Transfer");
 
-        bindViewModel();
+        bindPaymentViewModel();
     }
 
     @Override
@@ -97,22 +102,35 @@ public class UploadTransferActivity extends AppCompatActivity {
         uploadImage();
     }
 
-    private void updateUI(ProgressModel data) {
-        if (data.getStatus() == ProgressModel.STATUS.SUCCESS)
+    private void updateUI(PaymentModel data) {
+        if (data.getAccepted())
             binding.submit.setVisibility(View.GONE);
-        if (!data.getImage().isEmpty())
-            Glide.with(this).load(data.getImage()).into(binding.viewer);
+
+        if (!data.getReceipt().isEmpty())
+            Glide.with(this).load(data.getReceipt()).into(binding.viewer);
+
+        binding.transfer.setText(String.valueOf(data.getTransfer()));
+        binding.reference.setText(data.getReference());
+        binding.description.setText(data.getDescription());
     }
 
-    private void bindViewModel() {
-        ProgressViewModel vm = new ViewModelProvider(this).get(ProgressViewModel.class);
-        vm.getData(Database.refProgress(_progressID)).observe(this, this::progressListener);
+    private void bindPaymentViewModel() {
+        PaymentViewModel vm = new ViewModelProvider(this).get(PaymentViewModel.class);
+        vm.getData().observe(this, this::progressListener);
+        vm.start(Database.DOC_PAYMENT(progress_id));
     }
 
-    private void progressListener(ProgressModel data) {
+    private void progressListener(PaymentModel data) {
         this.data = data;
 
-        updateUI(data);
+        if (this.data == null) {
+            this.data = new PaymentModel();
+            this.data.setUserID(user_id);
+            this.data.setAgentID(agent_id);
+            this.data.setProjectID(project_id);
+        }
+
+        updateUI(this.data);
     }
 
     private void openDialog() {
@@ -174,14 +192,16 @@ public class UploadTransferActivity extends AppCompatActivity {
         loadingUpload.setCancelable(false);
         loadingUpload.show(getSupportFragmentManager(), TAG);
 
-        if (data != null && uri != null) {
-            String pathname = "mobile/receipt/" + data.getUserID() + "/" + _progressID;
+        if (uri != null) {
+            String pathname = "mobile/receipt/" + data.getUserID() + "/" + progress_id;
             StorageReference reference = FirebaseStorage.getInstance().getReference().child(pathname);
 
             reference
                     .putFile(uri)
                     .continueWithTask(task -> reference.getDownloadUrl())
                     .addOnCompleteListener(this::uriListener);
+        } else {
+            updateProgress(data.getReceipt());
         }
     }
 
@@ -191,19 +211,22 @@ public class UploadTransferActivity extends AppCompatActivity {
         if (downloadUri != null) updateProgress(downloadUri.toString());
     }
 
-    private void updateProgress(String img_url) {
-        FirebaseFirestore.getInstance().runTransaction(transaction -> {
-            DocumentReference progressRef = Database.refProgress(_progressID);
+    private void updateProgress(String url) {
+        String transfer = ((EditText) binding.transfer).getText().toString();
+        String reference = ((EditText) binding.reference).getText().toString();
+        String description = ((EditText) binding.description).getText().toString();
 
-            DocumentSnapshot snapshot = transaction.get(progressRef);
-            ProgressModel data = snapshot.toObject(ProgressModel.class);
+        data.setReceipt(url);
+        data.setTransfer(Integer.parseInt(transfer));
+        data.setReference(reference);
+        data.setDescription(description);
 
-            if (data != null) {
-                data.setImage(img_url);
-                transaction.set(progressRef, data);
-            }
+        Database
+                .DOC_PAYMENT(progress_id).set(data, SetOptions.merge())
+                .addOnCompleteListener(this::paymentSetListener);
+    }
 
-            return null;
-        });
+    private void paymentSetListener(Task<Void> task) {
+        loadingUpload.dismiss();
     }
 }

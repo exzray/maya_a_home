@@ -80,7 +80,7 @@ public class ProjectActivity extends AppCompatActivity {
         if (_projectID == null) return;
 
         ProjectViewModel project_vm = new ViewModelProvider(this).get(ProjectViewModel.class);
-        project_vm.start(Database.refProject(_projectID));
+        project_vm.start(Database.DOC_PROJECT(_projectID));
         project_vm.getData().observe(this, this::listener);
     }
 
@@ -102,9 +102,15 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     private void onClickItemProgress(ProgressModel data) {
+        String user_id = data.getUserID();
+        String agent_id = data.getAgentID();
+        String project_id = data.getProjectID();
         String progress_id = data.getSnapshot().getId();
 
         Intent intent = new Intent(this, UploadTransferActivity.class);
+        intent.putExtra(Interaction.EXTRA_STRING_USER_ID, user_id);
+        intent.putExtra(Interaction.EXTRA_STRING_AGENT_ID, agent_id);
+        intent.putExtra(Interaction.EXTRA_STRING_PROJECT_ID, project_id);
         intent.putExtra(Interaction.EXTRA_STRING_PROGRESS_ID, progress_id);
 
         startActivity(intent);

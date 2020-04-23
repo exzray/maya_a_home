@@ -17,10 +17,6 @@ public class ProgressModel {
     private String agentID = "";
     private String projectID = "";
     private String description = "";
-    private String reference = "";
-    private String image = "";
-    private String note = "";
-    private String reason = "";
 
     private Integer payment = 0;
 
@@ -80,38 +76,6 @@ public class ProgressModel {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 
     public Integer getPayment() {

@@ -56,11 +56,11 @@ public class ProjectAdminDetailFragment extends Fragment {
         }
 
         ProfileViewModel profile_vm = new ViewModelProvider(this).get(ProfileViewModel.class);
-        profile_vm.start(Database.refProfile(activity.getUser_id()));
+        profile_vm.start(Database.DOC_PROFILE(activity.getUser_id()));
         profile_vm.getData().observe(getViewLifecycleOwner(), this::listenerProfile);
 
         ProjectViewModel project_vm = new ViewModelProvider(this).get(ProjectViewModel.class);
-        project_vm.start(Database.refProject(activity.getProject_id()));
+        project_vm.start(Database.DOC_PROJECT(activity.getProject_id()));
         project_vm.getData().observe(getViewLifecycleOwner(), this::listenerProject);
     }
 
@@ -76,7 +76,7 @@ public class ProjectAdminDetailFragment extends Fragment {
         String string_revenue = "RM" + data.getTotalCost();
         String string_settlement = "RM" + data.getTotalPay();
         String string_balance = "RM" + (data.getTotalCost() - data.getTotalPay());
-        String string_status = (data.getTotalCost().equals(data.getTotalPay())) ? "Complete" : "Pending";
+        String string_status = (data.getTotalCost().equals(data.getTotalPay())) ? "complete" : "pending";
 
         binding.projectLabel.setText(data.getLabel());
         binding.projectStart.setText(string_started);

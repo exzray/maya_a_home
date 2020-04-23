@@ -70,7 +70,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
         }
 
         private String stringDate(Date date) {
-            return DateFormat.getDateInstance(DateFormat.SHORT).format(date);
+            return DateFormat.getDateInstance(DateFormat.MEDIUM).format(date);
         }
 
         @Override

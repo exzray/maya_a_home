@@ -12,6 +12,7 @@ public class Database {
     private static final String COLLECTION_USER = "mobile/user/documents";
     private static final String COLLECTION_PROJECT = "mobile/project/documents";
     private static final String COLLECTION_PROGRESS = "mobile/progress/documents";
+    private static final String COLLECTION_PAYMENT = "mobile/payment/documents";
 
     // field static value
     private static final String FIELD_USER_ID = "userID";
@@ -62,23 +63,23 @@ public class Database {
 
 
     // document
-    public static DocumentReference refProfile(String uid) {
+    public static DocumentReference DOC_PROFILE(String uid) {
         return getFirestore()
                 .document(COLLECTION_USER + "/" + uid);
     }
 
-    public static DocumentReference refProfile() {
-        return getFirestore()
-                .document(COLLECTION_USER + "/" + getUser().getUid());
-    }
-
-    public static DocumentReference refProject(String project_id) {
+    public static DocumentReference DOC_PROJECT(String project_id) {
         return getFirestore()
                 .document(COLLECTION_PROJECT + "/" + project_id);
     }
 
-    public static DocumentReference refProgress(String progress_id) {
+    public static DocumentReference DOC_PROGRESS(String progress_id) {
         return getFirestore()
                 .document(COLLECTION_PROGRESS + "/" + progress_id);
+    }
+
+    public static DocumentReference DOC_PAYMENT(String payment_id) {
+        return getFirestore()
+                .document(COLLECTION_PAYMENT + "/" + payment_id);
     }
 }

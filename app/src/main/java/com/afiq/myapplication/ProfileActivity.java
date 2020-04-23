@@ -127,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
         data.setAddress(_address);
 
         Database
-                .refProfile()
+                .DOC_PROFILE(Database.getUser().getUid())
                 .set(data, SetOptions.merge())
                 .addOnCompleteListener(this);
     }
