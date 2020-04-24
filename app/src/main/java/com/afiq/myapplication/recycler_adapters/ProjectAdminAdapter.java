@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afiq.myapplication.R;
-import com.afiq.myapplication.databinding.ItemAdminProjectBinding;
+import com.afiq.myapplication.databinding.ItemProjectAdminBinding;
 import com.afiq.myapplication.models.ProjectModel;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class ProjectAdminAdapter extends RecyclerView.Adapter<ProjectAdminAdapte
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemAdminProjectBinding binding = ItemAdminProjectBinding.inflate(inflater);
+        ItemProjectAdminBinding binding = ItemProjectAdminBinding.inflate(inflater);
         return new VH(binding);
     }
 
@@ -52,10 +52,10 @@ public class ProjectAdminAdapter extends RecyclerView.Adapter<ProjectAdminAdapte
 
     class VH extends RecyclerView.ViewHolder {
 
-        private ItemAdminProjectBinding binding;
+        private ItemProjectAdminBinding binding;
 
 
-        private VH(ItemAdminProjectBinding binding) {
+        private VH(ItemProjectAdminBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
