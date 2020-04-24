@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.ProjectAdminNavigationActivity;
-import com.afiq.myapplication.databinding.FragmentAdminProjectBinding;
+import com.afiq.myapplication.databinding.FragmentDashboardAdminBinding;
 import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.recycler_adapters.ProjectAdminAdapter;
 import com.afiq.myapplication.utilities.Database;
@@ -25,16 +25,16 @@ import com.afiq.myapplication.viewmodels.ProjectListViewModel;
 import java.util.List;
 
 
-public class AdminProjectFragment extends Fragment {
+public class DashboardAdminFragment extends Fragment {
 
     private static final String TAG = "AdminProjectFragment";
 
-    private FragmentAdminProjectBinding binding;
+    private FragmentDashboardAdminBinding binding;
 
     private ProjectAdminAdapter adapter;
 
 
-    public AdminProjectFragment() {
+    public DashboardAdminFragment() {
         // Required empty public constructor
     }
 
@@ -42,7 +42,7 @@ public class AdminProjectFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAdminProjectBinding.inflate(inflater);
+        binding = FragmentDashboardAdminBinding.inflate(inflater);
         return binding.getRoot();
     }
 

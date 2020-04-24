@@ -33,6 +33,7 @@
             android:fontFamily="@font/lato"
             android:text="Pending"
             android:textAlignment="viewEnd"
+            android:textAllCaps="true"
             android:textColor="@color/orange_900" />
     </LinearLayout>
 
@@ -42,13 +43,35 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/lato"
         android:text="Pendahuluan rumah"
+        android:textColor="#BF000000"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/detail"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/lato"
-        android:text="Lala, RM20000" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="Lala" />
+
+        <TextView
+            android:id="@+id/cost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/lato"
+            android:text=", RM20000" />
+
+        <TextView
+            android:id="@+id/created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="20, April 2020" />
+    </LinearLayout>
 </LinearLayout>

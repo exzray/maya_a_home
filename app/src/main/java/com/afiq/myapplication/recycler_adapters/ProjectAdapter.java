@@ -79,8 +79,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.VH> {
         }
     }
 
-    public interface ProjectActionItem {
 
+    public interface ProjectActionItem {
         void onClick(ProjectModel data);
     }
 }
