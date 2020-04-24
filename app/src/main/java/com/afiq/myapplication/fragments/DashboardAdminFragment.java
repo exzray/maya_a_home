@@ -21,6 +21,7 @@ import com.afiq.myapplication.recycler_adapters.ProjectAdminAdapter;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.viewmodels.ProjectListViewModel;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.List;
 
@@ -28,6 +29,8 @@ import java.util.List;
 public class DashboardAdminFragment extends Fragment {
 
     private static final String TAG = "AdminProjectFragment";
+    private static final int REQUEST_CODE_NEW_PROJECT = 1;
+    private static final int REQUEST_CODE_ADD_AGENT = 2;
 
     private FragmentDashboardAdminBinding binding;
 
@@ -61,6 +64,31 @@ public class DashboardAdminFragment extends Fragment {
 
         ProjectListViewModel vm = new ViewModelProvider(this).get(ProjectListViewModel.class);
         vm.getData(Database.queryAgentProjectList()).observe(getViewLifecycleOwner(), this::listener);
+
+        setupButtonOnClick();
+    }
+
+    private void setupButtonOnClick() {
+        binding.buttonNewProject.setOnClickListener(this::onClickNewProject);
+        binding.buttonAddAgent.setOnClickListener(this::onClickAddAgent);
+    }
+
+    private void onClickNewProject(View view) {
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
+        integrator.setBeepEnabled(true);
+        integrator.addExtra("request", REQUEST_CODE_NEW_PROJECT);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        integrator.setRequestCode(REQUEST_CODE_NEW_PROJECT);
+        integrator.initiateScan();
+    }
+
+    private void onClickAddAgent(View view) {
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
+        integrator.setBeepEnabled(true);
+        integrator.addExtra("request", REQUEST_CODE_ADD_AGENT);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        integrator.setRequestCode(REQUEST_CODE_ADD_AGENT);
+        integrator.initiateScan();
     }
 
     private void onClickProject(ProjectModel data) {
