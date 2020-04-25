@@ -27,7 +27,7 @@ import com.roger.catloadinglibrary.CatLoadingView;
 
 public class ProfileActivity extends AppCompatActivity implements OnCompleteListener<Void> {
 
-    private String _name = "";
+    private String _name = "unknown";
     private String _contact = "";
     private String _address = "";
     private String _error = "";
