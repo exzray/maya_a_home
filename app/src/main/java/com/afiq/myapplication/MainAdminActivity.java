@@ -49,10 +49,9 @@ public class MainAdminActivity extends AppCompatActivity {
                     Toast.makeText(this, "new project: " + result.getContents(), Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
-                    Toast.makeText(this, "add agent: " + result.getContents(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "add agent:l " + result.getContents(), Toast.LENGTH_SHORT).show();
                     break;
             }
-
     }
 
     public void setRequestCode(int code){
