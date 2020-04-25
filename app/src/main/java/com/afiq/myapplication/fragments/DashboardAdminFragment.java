@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.afiq.myapplication.MainAdminActivity;
 import com.afiq.myapplication.ProjectAdminNavigationActivity;
 import com.afiq.myapplication.databinding.FragmentDashboardAdminBinding;
 import com.afiq.myapplication.models.ProjectModel;
@@ -29,8 +30,6 @@ import java.util.List;
 public class DashboardAdminFragment extends Fragment {
 
     private static final String TAG = "AdminProjectFragment";
-    private static final int REQUEST_CODE_NEW_PROJECT = 1;
-    private static final int REQUEST_CODE_ADD_AGENT = 2;
 
     private FragmentDashboardAdminBinding binding;
 
@@ -74,20 +73,22 @@ public class DashboardAdminFragment extends Fragment {
     }
 
     private void onClickNewProject(View view) {
+        if (getActivity() != null)
+            ((MainAdminActivity) getActivity()).setRequestCode(MainAdminActivity.REQUEST_CODE_NEW_PROJECT);
+
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         integrator.setBeepEnabled(true);
-        integrator.addExtra("request", REQUEST_CODE_NEW_PROJECT);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setRequestCode(REQUEST_CODE_NEW_PROJECT);
         integrator.initiateScan();
     }
 
     private void onClickAddAgent(View view) {
+        if (getActivity() != null)
+            ((MainAdminActivity) getActivity()).setRequestCode(MainAdminActivity.REQUEST_CODE_ADD_AGENT);
+
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         integrator.setBeepEnabled(true);
-        integrator.addExtra("request", REQUEST_CODE_ADD_AGENT);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setRequestCode(REQUEST_CODE_ADD_AGENT);
         integrator.initiateScan();
     }
 

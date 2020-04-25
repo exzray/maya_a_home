@@ -18,7 +18,12 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class MainAdminActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_NEW_PROJECT = 1;
+    public static final int REQUEST_CODE_ADD_AGENT = 2;
+
     private ActivityMainAdminBinding binding;
+
+    private int request_code = 0;
 
 
     @Override
@@ -48,6 +53,10 @@ public class MainAdminActivity extends AppCompatActivity {
                     break;
             }
 
+    }
+
+    public void setRequestCode(int code){
+        request_code = code;
     }
 
     private void setupNavigation() {
