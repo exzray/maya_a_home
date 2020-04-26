@@ -2,9 +2,12 @@ package com.afiq.myapplication.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.ArraySet;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,18 +20,18 @@ import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class UserService extends Service {
 
     private static final String TAG = "UserService";
+    private static final String SHARED_PROJECT = "Project";
 
     private MutableLiveData<ProfileModel> profile;
     private MutableLiveData<List<ProjectModel>> projects;
@@ -98,11 +101,11 @@ public class UserService extends Service {
         if (listenerProjects == null) {
             listenerProjects = Database
                     .queryUserProjectList()
-                    .addSnapshotListener(this::listenerProjects);
+                    .addSnapshotListener(this::projectsListener);
         }
     }
 
-    private void listenerProjects(QuerySnapshot snapshots, FirebaseFirestoreException e) {
+    private void projectsListener(QuerySnapshot snapshots, FirebaseFirestoreException e) {
         if (snapshots == null) return;
 
         List<ProjectModel> list = new ArrayList<>();
@@ -113,12 +116,35 @@ public class UserService extends Service {
         for (DocumentChange change : snapshots.getDocumentChanges()) {
             ProjectModel data = change.getDocument().toObject(ProjectModel.class);
 
-            if (change.getType() == DocumentChange.Type.MODIFIED)
-
-                broadcastNotification("Project Notification", data.getLabel());
+            switch (change.getType()) {
+                case ADDED:
+                    showNotificationAddedProject(data, change.getDocument().getId());
+                    break;
+                case MODIFIED:
+                    broadcastNotification("Project Notification", "Receive project update on " + data.getLabel());
+                    break;
+                case REMOVED:
+                    break;
+            }
         }
 
         if (projects != null) projects.setValue(list);
+    }
+
+    private void showNotificationAddedProject(ProjectModel data, String project_id) {
+        SharedPreferences sp = getSharedPreferences(Interaction.APPLICATION_NAME, MODE_PRIVATE);
+        Set<String> set = sp.getStringSet(SHARED_PROJECT, new ArraySet<>());
+
+        Log.i(TAG, "set: " + set.size());
+
+        if (!set.contains(project_id)) {
+            set.add(project_id);
+            broadcastNotification("Project Notification", "Receive new project name " + data.getLabel());
+
+            Log.i(TAG, project_id + ": " + set.contains(project_id));
+
+            sp.edit().putStringSet(SHARED_PROJECT, set).apply();
+        }
     }
 
     private void stopProjects() {

@@ -61,17 +61,21 @@ public class ProjectAdminAdapter extends RecyclerView.Adapter<ProjectAdminAdapte
         }
 
         private void update(ProjectModel data) {
-            boolean status_state = data.getTotalCost().equals(data.getTotalPay());
-
             String label = data.getLabel();
             String revenue = "Revenue: RM" + data.getTotalCost();
 
             binding.label.setText(label);
             binding.revenue.setText(revenue);
-            binding.status.setText(getStatusText(status_state));
-            binding.status.setTextColor(getStatusColor(status_state));
+            binding.status.setText(getStatusText(getStatus(data)));
+            binding.status.setTextColor(getStatusColor(getStatus(data)));
 
             binding.getRoot().setOnClickListener(v -> actionItem.onClick(data));
+        }
+
+        private boolean getStatus(ProjectModel data) {
+            boolean status = data.getTotalCost().equals(data.getTotalPay());
+            if (data.getTotalCost() == 0) status = false;
+            return status;
         }
 
         private String getStatusText(boolean state) {

@@ -2,6 +2,7 @@ package com.afiq.myapplication.models;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Date;
 
@@ -26,6 +27,7 @@ public class ProjectModel {
 
         return data;
     }
+
 
     @Exclude
     public DocumentSnapshot getSnapshot() {
