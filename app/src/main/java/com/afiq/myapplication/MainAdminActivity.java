@@ -2,7 +2,6 @@ package com.afiq.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,8 +17,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class MainAdminActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE_NEW_PROJECT = 1;
-    public static final int REQUEST_CODE_ADD_AGENT = 2;
+    public static final int REQUEST_CODE_ADD_AGENT = 1;
+    public static final int REQUEST_CODE_NEW_PROJECT = 2;
 
     private ActivityMainAdminBinding binding;
 
@@ -39,22 +38,23 @@ public class MainAdminActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
 
-        if (result.getContents() != null)
+        if (result.getContents() != null) {
+            String id = result.getContents();
 
-            switch (requestCode){
-                case 1:
-                    Toast.makeText(this, "new project: " + result.getContents(), Toast.LENGTH_SHORT).show();
+            switch (request_code) {
+                case REQUEST_CODE_NEW_PROJECT:
+                    newProject(id);
                     break;
-                case 2:
-                    Toast.makeText(this, "add agent:l " + result.getContents(), Toast.LENGTH_SHORT).show();
+                case REQUEST_CODE_ADD_AGENT:
+                    addAgent(id);
                     break;
             }
+        }
     }
 
-    public void setRequestCode(int code){
+    public void setRequestCode(int code) {
         request_code = code;
     }
 
@@ -72,5 +72,13 @@ public class MainAdminActivity extends AppCompatActivity {
     private boolean tabSelectedListener(int position, boolean wasSelected) {
         binding.pager.setCurrentItem(position, true);
         return true;
+    }
+
+    private void newProject(String user_id) {
+
+    }
+
+    private void addAgent(String agent_id) {
+
     }
 }
