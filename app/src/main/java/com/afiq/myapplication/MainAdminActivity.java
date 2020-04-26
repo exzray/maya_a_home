@@ -10,11 +10,17 @@ import androidx.core.content.ContextCompat;
 
 import com.afiq.myapplication.databinding.ActivityMainAdminBinding;
 import com.afiq.myapplication.fragment_adapters.MainAdminPagerAdapter;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainAdminActivity extends AppCompatActivity {
 
@@ -46,10 +52,10 @@ public class MainAdminActivity extends AppCompatActivity {
 
             switch (request_code) {
                 case REQUEST_CODE_NEW_PROJECT:
-                    newProject(id);
+                    newProjectAction(id);
                     break;
                 case REQUEST_CODE_ADD_AGENT:
-                    addAgent(id);
+                    addAgentAction(id);
                     break;
             }
         }
@@ -66,7 +72,6 @@ public class MainAdminActivity extends AppCompatActivity {
         binding.pager.setAdapter(new MainAdminPagerAdapter(getSupportFragmentManager()));
         binding.navigation.setAccentColor(ContextCompat.getColor(this, R.color.colorPrimary));
         binding.navigation.setOnTabSelectedListener(this::tabSelectedListener);
-
         binding.navigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
     }
 
@@ -75,11 +80,41 @@ public class MainAdminActivity extends AppCompatActivity {
         return true;
     }
 
-    private void newProject(String user_id) {
+    private void newProjectAction(String user_id) {
+        new LovelyTextInputDialog(this)
+                .setTitle("Maya A Home")
+                .setMessage("Enter new project name")
+                .setConfirmButton("Alright", text -> newProjectInputListener(user_id, text))
+                .show();
+    }
+
+    private void addAgentAction(String agent_id) {
 
     }
 
-    private void addAgent(String agent_id) {
+    private void newProjectInputListener(String user_id, String project_label) {
+        newProject(user_id, project_label);
+    }
 
+    private void newProject(String user_id, String project_label) {
+        FirebaseFunctions functions = FirebaseFunctions.getInstance();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("userID", user_id);
+        data.put("projectLabel", project_label);
+
+        functions
+                .getHttpsCallable("newProject")
+                .call(data)
+                .addOnCompleteListener(this::newProjectListener);
+    }
+
+    private void newProjectListener(Task<HttpsCallableResult> task){
+        if (task.isSuccessful()) {
+            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+        } else {
+            assert task.getException() != null;
+            Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
