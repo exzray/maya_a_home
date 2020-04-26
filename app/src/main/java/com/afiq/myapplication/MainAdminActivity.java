@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import com.afiq.myapplication.databinding.ActivityMainAdminBinding;
 import com.afiq.myapplication.fragment_adapters.MainAdminPagerAdapter;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.google.zxing.integration.android.IntentIntegrator;
