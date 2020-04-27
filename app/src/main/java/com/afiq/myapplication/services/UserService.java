@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Set;
 
 public class UserService extends Service {
-
     private static final String TAG = "UserService";
     private static final String SHARED_PROJECT = "Project";
 
@@ -116,9 +115,6 @@ public class UserService extends Service {
             ProjectModel data = change.getDocument().toObject(ProjectModel.class);
 
             switch (change.getType()) {
-                case ADDED:
-                    showNotificationAddedProject(data, change.getDocument().getId());
-                    break;
                 case MODIFIED:
                     broadcastNotification("Project Notification", "Receive project update on " + data.getLabel());
                     break;
@@ -128,22 +124,6 @@ public class UserService extends Service {
         }
 
         if (projects != null) projects.setValue(list);
-    }
-
-    private void showNotificationAddedProject(ProjectModel data, String project_id) {
-        SharedPreferences sp = getSharedPreferences(Interaction.APPLICATION_NAME, MODE_PRIVATE);
-        Set<String> set = sp.getStringSet(SHARED_PROJECT, new ArraySet<>());
-
-        Log.i(TAG, "set: " + set.size());
-
-        if (!set.contains(project_id)) {
-            set.add(project_id);
-            broadcastNotification("Project Notification", "Receive new project name " + data.getLabel());
-
-            Log.i(TAG, project_id + ": " + set.contains(project_id));
-
-            sp.edit().putStringSet(SHARED_PROJECT, set).apply();
-        }
     }
 
     private void stopProjects() {
