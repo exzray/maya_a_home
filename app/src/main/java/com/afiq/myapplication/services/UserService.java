@@ -2,10 +2,7 @@ package com.afiq.myapplication.services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Binder;
 import android.os.IBinder;
-import android.util.ArraySet;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -25,11 +22,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class UserService extends Service {
     private static final String TAG = "UserService";
-    private static final String SHARED_PROJECT = "Project";
 
     private MutableLiveData<ProfileModel> profile;
     private MutableLiveData<List<ProjectModel>> projects;
@@ -38,8 +33,6 @@ public class UserService extends Service {
     private ListenerRegistration listenerProfile;
     private ListenerRegistration listenerProjects;
     private ListenerRegistration listenerProgress;
-
-    private IBinder binder = new UserBinder();
 
 
     @Override
@@ -53,7 +46,7 @@ public class UserService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return binder;
+        return null;
     }
 
     @Override
@@ -173,14 +166,6 @@ public class UserService extends Service {
         intent.putExtra(Interaction.EXTRA_STRING_MESSAGE, message);
 
         sendBroadcast(intent);
-    }
-
-
-    public class UserBinder extends Binder {
-
-        public UserService getService() {
-            return UserService.this;
-        }
     }
 }
 

@@ -1,11 +1,7 @@
 package com.afiq.myapplication;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,11 +11,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.afiq.myapplication.recycler_adapters.ProjectAdapter;
 import com.afiq.myapplication.databinding.ActivityMainBinding;
 import com.afiq.myapplication.databinding.DialogQrCodeBinding;
 import com.afiq.myapplication.models.ProjectModel;
-import com.afiq.myapplication.services.UserService;
+import com.afiq.myapplication.recycler_adapters.ProjectAdapter;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
@@ -32,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ProjectAdapter projectAdapter;
 
-    private UserService service;
-    private MainServiceConnection serviceConnection;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         projectAdapter = new ProjectAdapter(this::onClickProject);
 
-        bindService();
         setupRecycler();
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(serviceConnection);
     }
 
     @Override
@@ -80,13 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return false;
-    }
-
-    private void bindService() {
-        Intent intent = new Intent(this, UserService.class);
-        serviceConnection = new MainServiceConnection();
-
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void onClickProject(ProjectModel data) {
@@ -128,20 +105,5 @@ public class MainActivity extends AppCompatActivity {
 
         auth.signOut();
         updateUI(auth.getCurrentUser());
-    }
-
-
-    private class MainServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-            service = ((UserService.UserBinder) binder).getService();
-            service.getProjects().observe(MainActivity.this, list -> projectAdapter.update(list));
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            service.getProjects().removeObservers(MainActivity.this);
-        }
     }
 }

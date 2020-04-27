@@ -1,11 +1,6 @@
 package com.afiq.myapplication;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivityProfileBinding;
 import com.afiq.myapplication.models.ProfileModel;
-import com.afiq.myapplication.services.UserService;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.MyDialog;
@@ -37,9 +31,6 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
     private ActivityProfileBinding binding;
     private CatLoadingView dialog;
 
-    private UserService service;
-    private ProfileServiceConnection serviceConnection;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +40,7 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
 
         _profile_exist = getIntent().getBooleanExtra(Interaction.EXTRA_BOOLEAN_PROFILE_EXIST, true);
 
-        bindService();
-
         setupActionBar();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(serviceConnection);
     }
 
     @Override
@@ -73,13 +56,6 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
 
     public void onClickUpdate(View view) {
         collectUpdateInfo();
-    }
-
-    private void bindService() {
-        Intent intent = new Intent(this, UserService.class);
-        serviceConnection = new ProfileServiceConnection();
-
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void setupActionBar() {
@@ -130,29 +106,5 @@ public class ProfileActivity extends AppCompatActivity implements OnCompleteList
                 .DOC_PROFILE(Database.getUser().getUid())
                 .set(data, SetOptions.merge())
                 .addOnCompleteListener(this);
-    }
-
-    private class ProfileServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-            service = ((UserService.UserBinder) binder).getService();
-            service.getProfile().observe(ProfileActivity.this, data -> {
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-
-                if (data != null) {
-                    binding.name.setText(data.getName());
-                    binding.contact.setText(data.getContact());
-                    binding.address.setText(data.getAddress());
-
-                    if (!_profile_exist) Interaction.nextEnd(ProfileActivity.this, intent);
-                }
-            });
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            service.getProfile().removeObservers(ProfileActivity.this);
-        }
     }
 }

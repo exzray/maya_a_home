@@ -1,12 +1,9 @@
 package com.afiq.myapplication;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
@@ -14,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivitySplashBinding;
 import com.afiq.myapplication.models.ProfileModel;
-import com.afiq.myapplication.services.UserService;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,10 +22,6 @@ public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding binding;
     private CatLoadingView dialog;
 
-    private Intent intent;
-    private UserService service;
-    private SplashServiceConnection serviceConnection;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +30,6 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
-
-        intent = new Intent(this, UserService.class);
-        serviceConnection = new SplashServiceConnection();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (service != null) unbindService(serviceConnection);
     }
 
     @Override
@@ -82,9 +64,6 @@ public class SplashActivity extends AppCompatActivity {
 
             savedUser(Database.getUser());
 
-            startService(intent);
-            bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-
         } else animate();
     }
 
@@ -106,27 +85,5 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         Interaction.nextEnd(this, intent);
-    }
-
-
-    private class SplashServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder ibinder) {
-            UserService.UserBinder binder = (UserService.UserBinder) ibinder;
-            service = binder.getService();
-            service.getProfile().observe(SplashActivity.this, data -> {
-
-                executeAuthType(data);
-
-                dialog.dismiss();
-                finish();
-            });
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            service = null;
-        }
     }
 }

@@ -109,7 +109,7 @@ public class MainAdminActivity extends AppCompatActivity {
                 .addOnCompleteListener(this::newProjectListener);
     }
 
-    private void newProjectListener(Task<HttpsCallableResult> task){
+    private void newProjectListener(Task<HttpsCallableResult> task) {
         if (task.isSuccessful()) {
             Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
         } else {
