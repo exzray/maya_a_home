@@ -10,9 +10,12 @@ import androidx.core.content.ContextCompat;
 
 import com.afiq.myapplication.databinding.ActivityMainAdminBinding;
 import com.afiq.myapplication.fragment_adapters.MainAdminPagerAdapter;
+import com.afiq.myapplication.models.ProjectModel;
+import com.afiq.myapplication.utilities.Database;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 import com.google.zxing.integration.android.IntentIntegrator;

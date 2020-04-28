@@ -9,10 +9,10 @@ import com.google.firebase.firestore.Query;
 public class Database {
 
     // collection path
-    private static final String COLLECTION_USER = "mobile/user/documents";
-    private static final String COLLECTION_PROJECT = "mobile/project/documents";
-    private static final String COLLECTION_PROGRESS = "mobile/progress/documents";
-    private static final String COLLECTION_PAYMENT = "mobile/payment/documents";
+    public static final String COLLECTION_USER = "mobile/user/documents";
+    public static final String COLLECTION_PROJECT = "mobile/project/documents";
+    public static final String COLLECTION_PROGRESS = "mobile/progress/documents";
+    public static final String COLLECTION_PAYMENT = "mobile/payment/documents";
 
     // field static value
     private static final String FIELD_USER_ID = "userID";
