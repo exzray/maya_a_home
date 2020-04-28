@@ -38,6 +38,7 @@ public class ProjectListViewModel extends ViewModel {
 
     private void stop() {
         if (registration != null) registration.remove();
+        registration = null;
     }
 
     private void listener(QuerySnapshot snapshots, FirebaseFirestoreException e) {

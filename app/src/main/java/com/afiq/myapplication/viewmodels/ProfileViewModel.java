@@ -20,10 +20,13 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<ProfileModel> data;
     private ListenerRegistration registration;
 
+
     @Override
     protected void onCleared() {
         super.onCleared();
         stop();
+
+        Log.i(TAG, "onCleared: ");
     }
 
     public LiveData<ProfileModel> getData() {
@@ -38,6 +41,7 @@ public class ProfileViewModel extends ViewModel {
 
     private void stop() {
         if (registration != null) registration.remove();
+        registration = null;
     }
 
     private void listener(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
