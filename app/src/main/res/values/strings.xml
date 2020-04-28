@@ -46,4 +46,6 @@
     <string name="text_agent">Agent</string>
     <string name="text_new_project">new project</string>
     <string name="text_add_agent">Add Agent</string>
+    <string name="text_change_customer">Change Customer</string>
+    <string name="text_edit_project">edit project</string>
 </resources>

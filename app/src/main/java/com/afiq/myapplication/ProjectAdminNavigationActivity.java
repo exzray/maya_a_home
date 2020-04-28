@@ -40,12 +40,6 @@ public class ProjectAdminNavigationActivity extends AppCompatActivity {
             case R.id.action_view_progress:
                 viewProgress();
                 break;
-            case R.id.action_change_user:
-                changeUser();
-                break;
-            case R.id.action_edit_project:
-                editProject();
-                break;
             case R.id.action_view_feedback:
                 viewFeedback();
                 break;
