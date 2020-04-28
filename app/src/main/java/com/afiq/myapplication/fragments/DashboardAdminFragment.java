@@ -62,7 +62,8 @@ public class DashboardAdminFragment extends Fragment {
         binding.recycler.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         ProjectListViewModel vm = new ViewModelProvider(this).get(ProjectListViewModel.class);
-        vm.getData(Database.queryAgentProjectList()).observe(getViewLifecycleOwner(), this::listener);
+        vm.getData().observe(getViewLifecycleOwner(), this::listener);
+        vm.start(Database.queryAgentProjectList());
 
         setupButtonOnClick();
     }

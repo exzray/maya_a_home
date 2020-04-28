@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afiq.myapplication.databinding.ActivityMainBinding;
@@ -18,8 +19,11 @@ import com.afiq.myapplication.recycler_adapters.ProjectAdapter;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
 import com.afiq.myapplication.utilities.QrCode;
+import com.afiq.myapplication.viewmodels.ProjectListViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +41,23 @@ public class MainActivity extends AppCompatActivity {
         projectAdapter = new ProjectAdapter(this::onClickProject);
 
         setupRecycler();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        ProjectListViewModel vm = new ViewModelProvider(this).get(ProjectListViewModel.class);
+        vm.getData().observe(this, this::projectListListener);
+        vm.start(Database.queryUserProjectList());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ProjectListViewModel vm = new ViewModelProvider(this).get(ProjectListViewModel.class);
+        vm.getData().removeObservers(this);
     }
 
     @Override
@@ -82,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupRecycler() {
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
         binding.recycler.setAdapter(projectAdapter);
+    }
+
+    private void projectListListener(List<ProjectModel> list) {
+        projectAdapter.update(list);
     }
 
     private void actionCode() {

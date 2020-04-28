@@ -20,6 +20,12 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<ProfileModel> data;
     private ListenerRegistration registration;
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        stop();
+    }
+
     public LiveData<ProfileModel> getData() {
         if (data == null) data = new MutableLiveData<>();
         return data;

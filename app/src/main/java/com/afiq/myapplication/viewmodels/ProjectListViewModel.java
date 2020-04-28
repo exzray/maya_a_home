@@ -26,14 +26,12 @@ public class ProjectListViewModel extends ViewModel {
         stop();
     }
 
-    public LiveData<List<ProjectModel>> getData(Query query) {
+    public LiveData<List<ProjectModel>> getData() {
         if (data == null) data = new MutableLiveData<>();
-        start(query);
-
         return data;
     }
 
-    private void start(Query query) {
+    public void start(Query query) {
         stop();
         registration = query.addSnapshotListener(this::listener);
     }
