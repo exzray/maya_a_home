@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.afiq.myapplication.models.ProjectModel;
 import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.viewmodels.ProfileViewModel;
 import com.afiq.myapplication.viewmodels.ProjectViewModel;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.text.DateFormat;
 
@@ -46,6 +48,20 @@ public class ProjectAdminDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bindViewModel();
+        setupButton();
+    }
+
+    private void setupButton() {
+        binding.buttonChangeCustomer.setOnClickListener(v -> {
+            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
+            integrator.setBeepEnabled(true);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+            integrator.initiateScan();
+        });
+
+        binding.buttonEditProject.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Edit Project", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void bindViewModel() {
@@ -56,7 +72,7 @@ public class ProjectAdminDetailFragment extends Fragment {
         }
 
         ProfileViewModel profile_vm = new ViewModelProvider(this).get(ProfileViewModel.class);
-        profile_vm.start(Database.DOC_PROFILE(activity.getUser_id()));
+//        profile_vm.start(Database.DOC_PROFILE(activity.getUser_id()));
         profile_vm.getData().observe(getViewLifecycleOwner(), this::listenerProfile);
 
         ProjectViewModel project_vm = new ViewModelProvider(this).get(ProjectViewModel.class);

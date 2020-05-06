@@ -1,19 +1,27 @@
 package com.afiq.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afiq.myapplication.databinding.ActivityProjectAdminNavigationBinding;
+import com.afiq.myapplication.models.ProjectModel;
+import com.afiq.myapplication.utilities.Database;
 import com.afiq.myapplication.utilities.Interaction;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class ProjectAdminNavigationActivity extends AppCompatActivity {
 
     private ActivityProjectAdminNavigationBinding binding;
-    private String user_id;
     private String project_id;
 
 
@@ -48,23 +56,36 @@ public class ProjectAdminNavigationActivity extends AppCompatActivity {
         return false;
     }
 
-    public String getUser_id() {
-        return user_id;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
+
+        if (result.getContents() != null) {
+            String user_id = result.getContents();
+
+            FirebaseFirestore.getInstance().runTransaction(transaction -> {
+                DocumentReference reference  = Database.DOC_PROJECT(project_id);
+                ProjectModel project = ProjectModel.createInstance(transaction.get(reference));
+
+                if (project == null) return null;
+
+                project.setUserID(user_id);
+
+                transaction.set(reference, project);
+
+                return null;
+            });
+        }
     }
 
     public String getProject_id() {
+
         return project_id;
     }
 
     private void viewProgress() {
-
-    }
-
-    private void changeUser() {
-
-    }
-
-    private void editProject() {
 
     }
 
@@ -73,7 +94,6 @@ public class ProjectAdminNavigationActivity extends AppCompatActivity {
     }
 
     private void getExtras() {
-        user_id = getIntent().getStringExtra(Interaction.EXTRA_STRING_USER_ID);
         project_id = getIntent().getStringExtra(Interaction.EXTRA_STRING_PROJECT_ID);
     }
 }
